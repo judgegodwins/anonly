@@ -1,0 +1,87 @@
+@import 'utilities';
+
+.on-board {
+  width: 100%;
+  height: 100%;
+  padding: 0 $padding;
+  @include flex(
+    $direction: column, 
+    $justify: space-evenly,
+    $align: flex-start
+  );
+
+  .top-bar {
+    // position: absolute;
+    // z-index: 3;
+    // top: 0;
+    // left: 0;
+    width: 100%;
+    padding: 20px 0;
+    @include flex($justify: space-between);
+
+
+    #logo {
+      @include flex();
+      height: 100%;
+
+      &>img {
+        width: 100%;
+        height: 25px;
+        transform: scale(1.1)
+      }
+    }
+
+    .icon {
+      @include flex($direction: column, $justify: space-evenly);
+      width: 26px;
+      height: 30px;
+      transform: scale(0.7);
+
+      .line {
+        height: 3.2px;
+        width: 100%;
+        background: #000;
+        border-radius: 3px;
+
+        // &:not(:first-child) {
+        //   margin-top: 8px;
+        // }
+
+        &:nth-child(2) {
+          width: 75%;
+          margin-left: 25%;
+        }
+      }
+    }
+  }
+
+  div.grown {
+    padding: $padding 0;
+
+    @include flex(
+      $direction: column,
+      $align: flex-start,
+      $justify: space-between
+    );    
+    .about {
+
+      margin-bottom: 10rem;
+      &>h1 {
+        font-size: 40px;
+        font-weight: 600;
+      }
+  
+      &>h2 {
+        font-weight: 500;
+        color: rgba(0,0,0,.6)
+      }
+  
+      &>p {
+        color: rgba(0,0,0,.6)
+      }
+    }
+  
+    .buttons-div {
+    }
+  }
+}
