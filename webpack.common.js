@@ -4,17 +4,17 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
-    main: path.resolve(__dirname, 'src', 'index.js')
+    main: path.resolve(__dirname, 'src', 'index.tsx')
   },
 
   resolve: {
-    alias: {
-      Styles: path.resolve(__dirname, 'src/styles'),
-      Images: path.resolve(__dirname, 'src/images'),
-      Screens: path.resolve(__dirname, 'src/screens'),
-      Components: path.resolve(__dirname, 'src/components')
-    },
-    extensions: [ '.js', '.jsx', '.scss', '.css', '.jpg', '.png' ]
+    // alias: {
+    //   Styles: path.resolve(__dirname, 'src/styles'),
+    //   Images: path.resolve(__dirname, 'src/images'),
+    //   Screens: path.resolve(__dirname, 'src/screens'),
+    //   Components: path.resolve(__dirname, 'src/components')
+    // },
+    extensions: [ '.tsx', '.ts', '.js', '.jsx', '.scss', '.css', '.jpg', '.png' ]
   },
 
   output: {
@@ -24,6 +24,11 @@ module.exports = {
 
   module: {
     rules: [
+      {
+        test: /\.(ts|tsx)$/,
+        use: ["ts-loader"],
+        exclude: /node_modules/
+      },
       {
         test: /\.(js|jsx)$/,
         use: ['babel-loader'],
