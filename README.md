@@ -1,5 +1,5 @@
 # anonly
-Run `yarn install` and then `yarn start` to start this project.
+Run `yarn install` and `yarn start` to start this project.
 This project uses Typescript.
 
 Directory structure (with example)
