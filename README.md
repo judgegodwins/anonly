@@ -1,3 +1,9 @@
-Live App: https://suspicious-nobel-65e2ba.netlify.app/
+# anonly
+To start run `yarn install` and then `yarn start`
+This project uses Typescript.
 
-Still in Development
+Directory structure
+  >src
+    >screens
+    >components
+    >services
