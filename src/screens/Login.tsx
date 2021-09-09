@@ -1,7 +1,6 @@
 import Padding from '../components/Padding';
 import TextField from '../components/TextField';
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import AuthEnrollCard from '../components/FormComponents/AuthEnrollCard';
 import Button from '../components/Button';
 import Typography from '../components/Typography';
