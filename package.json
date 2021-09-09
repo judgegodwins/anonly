@@ -18,6 +18,7 @@
     "@babel/preset-typescript": "^7.15.0",
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
+    "@types/styled-components": "^5.1.14",
     "astroturf": "^0.10.5",
     "autoprefixer": "^10.0.1",
     "babel-loader": "^8.1.0",
@@ -44,6 +45,7 @@
     "axios": "^0.21.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "styled-components": "^5.3.1"
   }
 }
