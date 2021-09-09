@@ -5,7 +5,7 @@ const Wrapper = styled.div`
   height: 100vh;
   background: #2186DE;
 
-  @media only screen and (min-width: 961px) {
+  @media only screen and (min-width: 900px) {
     padding: 0 20%;
   }
 `
