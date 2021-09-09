@@ -1,7 +1,7 @@
-import TextField from './components/TextField';
 import React, { Fragment } from 'react';
+import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 import GlobalStyle from './GlobalStyle';
-import Padding from './components/Padding';
+import Signup from './screens/Signup';
 import Login from './screens/Login';
 
 export default function App() {
@@ -20,7 +20,12 @@ export default function App() {
         <p>Hello world loremm dsujsyhdhu hdsdgsudg hsudsuduasdugusgusdsdsdsdswd sdsdsdsys sdsdsgdsd</p>
       </Padding> */}
 
-      <Login />
+      <Router>
+        <Switch>
+          <Route path="/" component={Login} exact />
+          <Route path="/signup" component={Signup} exact />
+        </Switch>
+      </Router>
     </Fragment>
   )
 }

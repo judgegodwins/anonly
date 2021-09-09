@@ -8,15 +8,15 @@ interface PaddingProps {
 }
 
 const Padding = styled.div`
-  padding: ${({padding}: PaddingProps): string => {
+  padding: ${(props: PaddingProps): string => {
       // if paddings are numbers cast to px.
-      if (padding instanceof Array) {
-        return padding.map(pad => Number.isInteger(pad) ? `${pad}px` : pad)
+      if (props.padding instanceof Array) {
+        return props.padding.map(pad => Number.isInteger(pad) ? `${pad}px` : pad)
           .join(' ');
-      } else if (typeof padding === "number") {
-        return `${padding}px`;
+      } else if (typeof props.padding === "number") {
+        return `${props.padding}px`;
       } else {
-        return padding;
+        return props.padding;
       }
 
     }

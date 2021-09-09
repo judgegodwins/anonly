@@ -9,7 +9,7 @@ import FormWrapper from '../components/FormComponents/FormCardWrapper';
 import Header from '../components/FormComponents/Header';
 
 
-export default class Login extends Component {
+export default class Signup extends Component {
 
   constructor(props: any) {
     super(props);
@@ -17,21 +17,32 @@ export default class Login extends Component {
 
   render() {
     return (
-      <Wrapper id="login">
-        <Header heading="Log In"/>
+      <Wrapper id="signup">
+        <Header heading="Create An Account"/>
         <FormWrapper>
-          <AuthEnrollCard bottomRedirect="/signup">
+          <AuthEnrollCard bottomRedirect="/">
             <Padding padding={[0, 0, 20, 0]}>
               <TextField
                 id="username"
-                placeholder="Userame"
+                name="username"
+                placeholder="Username"
               />
             </Padding>
             <Padding padding={[0, 0, 20, 0]}>
               <TextField
                 id="password"
                 type="password"
+                name="password"
                 placeholder="Password"
+              />
+            </Padding>
+
+            <Padding padding={[0, 0, 20, 0]}>
+              <TextField
+                id="confirm_password"
+                name="confirm_password"
+                type="password"
+                placeholder="Confirm Password"
               />
             </Padding>
 

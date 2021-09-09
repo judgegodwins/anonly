@@ -13,6 +13,7 @@ interface TypographyProps {
   style?: {
     [item: string]: string | number
   }
+  [prop: string]: any;
 }
 
 /**

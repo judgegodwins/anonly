@@ -16,6 +16,10 @@ const HeaderWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   padding: 0 ${styleConfig.screenPadding.mobile + 'px'};
+  
+  @media only screen and (min-width: 961px) {
+    padding: 0;
+  }
 `
 
 const Header: FC<HeaderProps> = (props) => {

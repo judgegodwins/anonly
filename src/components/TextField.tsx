@@ -64,6 +64,7 @@ interface TextFieldProps {
   className?: string;
   placeholder?: string;
   type?: string
+  name?: string
 }
 
 export default function TextField(props: TextFieldProps) {
@@ -74,6 +75,7 @@ export default function TextField(props: TextFieldProps) {
         id={props.id}
         className={props.className}
         placeholder={props.placeholder}
+        name={props.name}
       />
       <Label htmlFor={props.id} className="text_label">{props.placeholder}</Label>
     </FieldGroup>

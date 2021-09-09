@@ -50,7 +50,7 @@ module.exports = {
     new CleanWebpackPlugin(),
 
     new HtmlWebpackPlugin({
-      title: 'Citibank',
+      title: 'Anonly',
       filename: 'index.html',
       template: path.resolve(__dirname, 'public/index.html')
     })

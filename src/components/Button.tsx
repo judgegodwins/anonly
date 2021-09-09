@@ -10,7 +10,7 @@ const ButtonBase = styled.button`
   background: #2185DC;
   border-radius: 15px;
   outline: none;
-  padding: 11px 20px;
+  padding: 11px 40px;
   color: #fff;
   border: none;
   width: ${(props: ButtonProps) => props.fullWidth ? '100%' : 'unset'};
