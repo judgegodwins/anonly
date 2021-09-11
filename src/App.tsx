@@ -3,6 +3,7 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 import GlobalStyle from './GlobalStyle';
 import Signup from './screens/Signup';
 import Login from './screens/Login';
+import SendMessage from './screens/SendMessage';
 
 export default function App() {
 
@@ -24,6 +25,7 @@ export default function App() {
         <Switch>
           <Route path="/" component={Login} exact />
           <Route path="/signup" component={Signup} exact />
+          <Route path="/m/:username" component={SendMessage} exact/>
         </Switch>
       </Router>
     </Fragment>

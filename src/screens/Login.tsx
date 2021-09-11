@@ -1,13 +1,14 @@
 import Padding from '../components/Padding';
 import TextField from '../components/TextField';
 import React, { Component } from 'react';
-import AuthEnrollCard from '../components/FormComponents/AuthEnrollCard';
+import SlideInCard from '../components/SlideInCard';
 import FormActionButton from '../components/FormComponents/FormActionButton';
 import Typography from '../components/Typography';
-import Wrapper from '../components/FormComponents/Wrapper';
+import FullscreenWrapper from '../components/FullscreenWrapper';
 import FormWrapper from '../components/FormComponents/FormCardWrapper';
-import Header from '../components/FormComponents/Header';
-
+import Header from '../components/Header';
+import BottomRedirect from '../components/FormComponents/BottomRedirect';
+import { styleConfig } from '../config';
 
 export default class Login extends Component {
 
@@ -17,10 +18,14 @@ export default class Login extends Component {
 
   render() {
     return (
-      <Wrapper id="login">
-        <Header heading="Log In"/>
+      <FullscreenWrapper id="login" color="primary">
+        <Header
+          type="primary"
+          firstText="Hey there 👋🏾"
+          outstandingText="Log In"
+        />
         <FormWrapper>
-          <AuthEnrollCard bottomRedirect="/signup">
+          <SlideInCard>
             <Padding padding={[0, 0, 20, 0]}>
               <TextField
                 id="username"
@@ -36,11 +41,17 @@ export default class Login extends Component {
             </Padding>
 
             <FormActionButton>
-              <Typography type="h5">Log in</Typography> 
+              <Typography type="h5" color={styleConfig.color.white}>Log in</Typography> 
             </FormActionButton>
-          </AuthEnrollCard>
+
+            <BottomRedirect 
+              to="/signup"
+              text="Don't have an account?"
+              linkText="Sign up"
+            />
+          </SlideInCard>
         </FormWrapper>
-      </Wrapper>
+      </FullscreenWrapper>
     )
   }
 }

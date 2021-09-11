@@ -3,7 +3,7 @@ import styled from 'styled-components';
 type StringOrNumber = string | number;
 
 interface PaddingProps {
-  padding: (number | string)[] | string | number;
+  padding: StringOrNumber[] | StringOrNumber;
   [item: string]: any;
 }
 
@@ -20,7 +20,7 @@ const Padding = styled.div`
       }
 
     }
-  }
+  };
 `
 
-export default Padding
+export default Padding;

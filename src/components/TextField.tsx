@@ -1,3 +1,4 @@
+import { styleConfig } from '../config';
 import React from 'react';
 
 import styled from 'styled-components';
@@ -6,7 +7,7 @@ const FieldGroup = styled.div`
   position: relative;
   padding: 20px;
   width: 100%;
-  background: #F0F2F4;
+  background: ${styleConfig.color.secondary};
   border-radius: 15px; 
 `
 
@@ -30,7 +31,7 @@ const PlainTextField = styled.input`
   padding: 0;
   font-size: 14px;
   line-height: 17px;
-  color: #243442;
+  color: ${styleConfig.color.text};
   border: none;
   font-family: 'Montserrat', sans-serif;
 
