@@ -8,12 +8,14 @@ module.exports = {
   },
 
   resolve: {
-    // alias: {
-    //   Styles: path.resolve(__dirname, 'src/styles'),
-    //   Images: path.resolve(__dirname, 'src/images'),
-    //   Screens: path.resolve(__dirname, 'src/screens'),
-    //   Components: path.resolve(__dirname, 'src/components')
-    // },
+    alias: {
+      styles: path.resolve(__dirname, 'src/styles'),
+      images: path.resolve(__dirname, 'src/images'),
+      screens: path.resolve(__dirname, 'src/screens'),
+      components: path.resolve(__dirname, 'src/components'),
+      config: path.resolve(__dirname, 'src/config.ts'),
+      svg: path.resolve(__dirname, 'src/svg')
+    },
     extensions: [ '.tsx', '.ts', '.js', '.jsx', '.scss', '.css', '.jpg', '.png' ]
   },
 
@@ -42,7 +44,11 @@ module.exports = {
       {
         test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
         type: 'asset/resource'
-      }
+      },
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
+      },
     ]
   },
 
