@@ -1,5 +1,5 @@
 import { styleConfig } from '../config';
-import React from 'react';
+import React, { useRef } from 'react';
 
 import styled from 'styled-components';
 
@@ -9,6 +9,10 @@ const FieldGroup = styled.div`
   width: 100%;
   background: ${styleConfig.color.secondary};
   border-radius: 15px; 
+
+  &:focus {
+    border: 2px solid ${styleConfig.color.adjustPrimary};
+  }
 `
 
 const Label = styled.label`
@@ -69,9 +73,18 @@ interface TextFieldProps {
 }
 
 export default function TextField(props: TextFieldProps) {
+  const cover = useRef<HTMLDivElement>(null);
   return (
-    <FieldGroup>
+    <FieldGroup ref={cover}>
       <PlainTextField
+        onFocus={() => {
+          if (cover.current)
+            cover.current.style.border = `2px solid ${styleConfig.color.adjustPrimary}`;
+        }}
+        onBlur={() => {
+          if (cover.current)
+            cover.current.style.border = 'unset';
+        }}
         type={props.type || "text"}
         id={props.id}
         className={props.className}

@@ -1,6 +1,6 @@
 export const styleConfig = {
   screenPadding: {
-    mobile: 27,
+    mobile: '25px',
     desktop: null
   },
   color: {

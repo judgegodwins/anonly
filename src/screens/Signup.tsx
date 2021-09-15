@@ -20,12 +20,14 @@ export default class Signup extends Component {
     return (
       <FullscreenWrapper id="signup" color="primary">
         <Header
+          width="100%"
+          height="25%"
           type="primary"
           firstText="Hey there 👋🏾"
           outstandingText="Create An Account"
         />
         <FormWrapper>
-          <SlideInCard>
+          <SlideInCard height="100%">
             <Padding padding={[0, 0, 20, 0]}>
               <TextField
                 id="username"
@@ -52,7 +54,7 @@ export default class Signup extends Component {
             </Padding>
 
             <FormActionButton>
-              <Typography type="h5">Log in</Typography>
+              <Typography type="h5" color="#fff">Sign up</Typography>
             </FormActionButton>
 
             <BottomRedirect

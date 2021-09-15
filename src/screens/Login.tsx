@@ -20,12 +20,13 @@ export default class Login extends Component {
     return (
       <FullscreenWrapper id="login" color="primary">
         <Header
+          height="25%"
           type="primary"
           firstText="Hey there 👋🏾"
           outstandingText="Log In"
         />
-        <FormWrapper>
-          <SlideInCard>
+        {/* <FormWrapper> */}
+          <SlideInCard height="75%">
             <Padding padding={[0, 0, 20, 0]}>
               <TextField
                 id="username"
@@ -50,7 +51,7 @@ export default class Login extends Component {
               linkText="Sign up"
             />
           </SlideInCard>
-        </FormWrapper>
+        {/* </FormWrapper> */}
       </FullscreenWrapper>
     )
   }

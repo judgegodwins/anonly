@@ -4,6 +4,7 @@ import GlobalStyle from './GlobalStyle';
 import Signup from './screens/Signup';
 import Login from './screens/Login';
 import SendMessage from './screens/SendMessage';
+import Home from 'screens/Home';
 
 export default function App() {
 
@@ -23,7 +24,8 @@ export default function App() {
 
       <Router>
         <Switch>
-          <Route path="/" component={Login} exact />
+          <Route path="/" component={Home} exact />
+          <Route path="/login" component={Login} exact />
           <Route path="/signup" component={Signup} exact />
           <Route path="/m/:username" component={SendMessage} exact/>
         </Switch>

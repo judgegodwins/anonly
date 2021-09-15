@@ -1,10 +1,14 @@
-import React, { CSSProperties, FC } from 'react';
+import React, { CSSProperties, FC, MouseEventHandler } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface ButtonProps {
+  to?: string;
+  href?: string;
+  as?: React.ComponentType<any> | string;
   style?: CSSProperties;
   fullWidth?: Boolean;
-  onClick?: (e: Event) => any;
+  onClick?: MouseEventHandler<HTMLButtonElement> & ((e: MouseEvent) => any);
 }
 
 const ButtonBase = styled.button`
@@ -20,7 +24,14 @@ const ButtonBase = styled.button`
 `
 
 const Button: FC<ButtonProps> = (props) => (
-  <ButtonBase style={props.style} fullWidth={props.fullWidth}>
+  <ButtonBase 
+    as={props.as} 
+    to={props.to}
+    href={props.href} 
+    onClick={props.onClick} 
+    style={props.style} 
+    fullWidth={props.fullWidth}
+  >
     {props.children}
   </ButtonBase>
 )
