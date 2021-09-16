@@ -8,6 +8,9 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
   }
+  html, body, #root {
+    height: 100%;
+  }
 
   body {
     padding: 0;

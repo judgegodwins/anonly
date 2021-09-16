@@ -10,7 +10,7 @@ interface WrapperProps {
 const FullscreenWrapperBase = styled.div`
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background: ${(props: WrapperProps) => styleConfig.color[props.color]};
   /* padding: ${styleConfig.screenPadding.mobile + 'px'}; */
 

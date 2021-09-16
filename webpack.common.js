@@ -59,7 +59,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Anonly',
       filename: 'index.html',
-      template: path.resolve(__dirname, 'public/index.html')
+      template: path.resolve(__dirname, 'src/index.html')
     }),
 
     new CopyWebpackPlugin({
