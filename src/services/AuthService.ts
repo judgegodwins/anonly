@@ -15,10 +15,7 @@ import { getAccessToken } from "helpers/authHelpers";
 
 export default class AuthService {
   private static config = {
-    baseURL:
-      process.env.NODE_ENV === "production"
-        ? `${process.env.REACT_API_URL}/auth`
-        : "http://localhost:8080/auth", // temporary
+    baseURL: `${process.env.API_URL}/auth`,
     headers: {
       "Content-Type": "application/json",
     },

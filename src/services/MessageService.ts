@@ -6,10 +6,7 @@ class MessageService {
 
   constructor() {
     this.http = axios.create({
-      baseURL:
-        process.env.NODE_ENV === "production"
-          ? `${process.env.REACT_API_URL}/message`
-          : "http://localhost:8080/message", // temporary
+      baseURL: `${process.env.API_URL}/message`,
       headers: {
         "Content-Type": "application/json",
       },
