@@ -126,9 +126,9 @@ const Signup: FC<{}> = (props) => {
                   </FormActionButton>
 
                   <BottomRedirect
-                    to="/signup"
-                    text="Don't have an account?"
-                    linkText="Sign up"
+                    to="/login"
+                    text="Already have an account?"
+                    linkText="Log in"
                   />
                 </form>
               )
