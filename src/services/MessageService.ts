@@ -8,7 +8,7 @@ class MessageService {
     this.http = axios.create({
       baseURL:
         process.env.NODE_ENV === "production"
-          ? "https://anonly.herokuapp.com/message"
+          ? `${process.env.REACT_API_URL}/message`
           : "http://localhost:8080/message", // temporary
       headers: {
         "Content-Type": "application/json",
