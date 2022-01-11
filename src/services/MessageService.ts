@@ -5,6 +5,7 @@ class MessageService {
   public http: AxiosInstance;
 
   constructor() {
+    console.log('api url: ', process.env.API_URL);
     this.http = axios.create({
       baseURL: `${process.env.API_URL}/message`,
       headers: {
