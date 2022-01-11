@@ -15,7 +15,13 @@ module.exports = {
       screens: path.resolve(__dirname, 'src/screens'),
       components: path.resolve(__dirname, 'src/components'),
       config: path.resolve(__dirname, 'src/config.ts'),
-      svg: path.resolve(__dirname, 'src/svg')
+      store: path.resolve(__dirname, 'src/store.ts'),
+      svg: path.resolve(__dirname, 'src/svg'),
+      types: path.resolve(__dirname, 'src/types'),
+      slices: path.resolve(__dirname, 'src/slices'),
+      services: path.resolve(__dirname, 'src/services'),
+      hooks: path.resolve(__dirname, 'src/hooks'),
+      helpers: path.resolve(__dirname, 'src/helpers')
     },
     extensions: [ '.tsx', '.ts', '.js', '.jsx', '.scss', '.css', '.jpg', '.png' ]
   },

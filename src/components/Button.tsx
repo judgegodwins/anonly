@@ -1,39 +1,38 @@
-import React, { CSSProperties, FC, MouseEventHandler } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { styleConfig } from 'config';
 
-interface ButtonProps {
-  to?: string;
-  href?: string;
-  as?: React.ComponentType<any> | string;
-  style?: CSSProperties;
+export interface ButtonProps {
   fullWidth?: Boolean;
-  onClick?: MouseEventHandler<HTMLButtonElement> & ((e: MouseEvent) => any);
+  variant?: 'primary' | 'secondary' | 'transparent' | 'danger'
+  textColor?: string;
 }
 
-const ButtonBase = styled.button`
-  background: #2185DC;
+const Button = styled.button<ButtonProps>`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: ${({ variant }) => {
+    const {adjustPrimary: primary, secondary} = styleConfig.color;
+    if (!variant) return primary;
+    if (variant === 'primary') return primary;
+    if (variant === 'secondary') return secondary;
+    if (variant === 'danger') return '#f00';
+    if (variant === 'transparent') return 'transparent';
+  }};
   cursor: pointer;
   border-radius: 15px;
   outline: none;
   padding: 11px 40px;
-  color: #fff;
+  color: ${({ variant, textColor }) => 
+    variant === 'secondary' || variant === 'transparent'
+      ? textColor || styleConfig.color.textSecondary
+      : '#fff'
+  };
   border: none;
   width: ${(props: ButtonProps) => props.fullWidth ? '100%' : 'unset'};
   font-weight: 500;
 `
-
-const Button: FC<ButtonProps> = (props) => (
-  <ButtonBase 
-    as={props.as} 
-    to={props.to}
-    href={props.href} 
-    onClick={props.onClick} 
-    style={props.style} 
-    fullWidth={props.fullWidth}
-  >
-    {props.children}
-  </ButtonBase>
-)
 
 export default Button;

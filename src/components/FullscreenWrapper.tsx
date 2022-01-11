@@ -14,8 +14,12 @@ const FullscreenWrapperBase = styled.div`
   background: ${(props: WrapperProps) => styleConfig.color[props.color]};
   /* padding: ${styleConfig.screenPadding.mobile + 'px'}; */
 
-  @media only screen and (min-width: 900px) {
+  @media only screen and (min-width: 1366px) {
     padding: 0 20%;
+  }
+
+  @media only screen and (min-height: 1366px) {
+    padding: 20% 20%;
   }
 `
 const Container = styled.div`

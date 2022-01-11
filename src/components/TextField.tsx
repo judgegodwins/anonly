@@ -1,20 +1,34 @@
-import { styleConfig } from '../config';
-import React, { useRef } from 'react';
+import React, { FC, useRef } from "react";
+import styled from "styled-components";
 
-import styled from 'styled-components';
+import Typography from "./Typography";
+import InputHelperText from "./InputHelperText";
+import { styleConfig } from "config";
 
-const FieldGroup = styled.div`
+
+export interface TextFieldBaseProps {
+  helperText?: string | false;
+  error?: boolean;
+}
+
+type TextFieldProps = TextFieldBaseProps & React.HTMLProps<HTMLInputElement>;
+
+const Wrapper = styled.div``;
+
+const FieldGroup = styled.div<TextFieldBaseProps>`
   position: relative;
   padding: 20px;
   width: 100%;
   background: ${styleConfig.color.secondary};
-  border-radius: 15px; 
+  border: ${(props: TextFieldBaseProps) => {
+    return props.error ? "1px solid #f00" : "none";
+  }};
+  border-radius: 15px;
 
   &:focus {
     border: 2px solid ${styleConfig.color.adjustPrimary};
   }
-`
-
+`;
 const Label = styled.label`
   position: absolute;
   top: 20px;
@@ -25,19 +39,18 @@ const Label = styled.label`
   font-size: 10px;
   /* line-height: 12.19px; */
   color: #9b9b9b;
-`
-
+`;
 const PlainTextField = styled.input`
   width: 100%;
   background: transparent;
- 
+
   outline: none;
   padding: 0;
   font-size: 14px;
   line-height: 17px;
-  color: ${styleConfig.color.text};
   border: none;
-  font-family: 'Montserrat', sans-serif;
+  color: ${styleConfig.color.text};
+  font-family: "IBM Plex Sans", sans-serif;
 
   &::placeholder {
     color: transparent;
@@ -61,37 +74,37 @@ const PlainTextField = styled.input`
 
     margin-top: 10px;
   }
+`;
 
-
-`
-interface TextFieldProps {
-  id?: string;
-  className?: string;
-  placeholder?: string;
-  type?: string
-  name?: string
-}
-
-export default function TextField(props: TextFieldProps) {
+const TextField: FC<TextFieldProps> = (props) => {
   const cover = useRef<HTMLDivElement>(null);
   return (
-    <FieldGroup ref={cover}>
-      <PlainTextField
-        onFocus={() => {
-          if (cover.current)
-            cover.current.style.border = `2px solid ${styleConfig.color.adjustPrimary}`;
-        }}
-        onBlur={() => {
-          if (cover.current)
-            cover.current.style.border = 'unset';
-        }}
-        type={props.type || "text"}
-        id={props.id}
-        className={props.className}
-        placeholder={props.placeholder}
-        name={props.name}
-      />
-      <Label htmlFor={props.id} className="text_label">{props.placeholder}</Label>
-    </FieldGroup>
-  )
-}
+    <Wrapper>
+      <FieldGroup ref={cover} error={props.error}>
+        <PlainTextField
+          onFocus={() => {
+            if (cover.current)
+              cover.current.style.border = `2px solid ${styleConfig.color.adjustPrimary}`;
+          }}
+          onBlur={() => {
+            if (cover.current) cover.current.style.border = "unset";
+          }}
+          onChange={props.onChange}
+          name={props.name}
+          value={props.value}
+          placeholder={props.placeholder}
+          type={props.type}
+        />
+        <Label htmlFor={props.id} className="text_label">
+          {props.placeholder}
+        </Label>
+      </FieldGroup>
+
+      {props.helperText && (
+        <InputHelperText error={props.error} text={props.helperText} />
+      )}
+    </Wrapper>
+  );
+};
+
+export default TextField;

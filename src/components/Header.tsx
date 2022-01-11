@@ -8,7 +8,8 @@ import { styleConfig } from "../config";
 interface HeaderWrapperProps {
   height?: string;
   width?: string;
-  noSidePadding?: boolean
+  noSidePadding?: boolean;
+  noSidePaddingDesktop?: boolean;
 }
 
 interface HeaderProps extends HeaderWrapperProps {
@@ -25,8 +26,8 @@ const HeaderWrapper = styled.div`
   justify-content: center;
   padding: 0 ${(props: HeaderWrapperProps) => props.noSidePadding ? 0 : styleConfig.screenPadding.mobile};
   
-  @media only screen and (min-width: 961px) {
-    padding: 0;
+  @media only screen and (min-width: 1366px) {
+    padding: 0 ${(props: HeaderWrapperProps) => props.noSidePaddingDesktop ? 0 : styleConfig.screenPadding.mobile};
   }
 `
 
@@ -41,7 +42,7 @@ const Header: FC<HeaderProps> = (props) => {
         {props.firstText}
       </Typography>
       <Typography
-        style={{marginTop: 10, marginBottom: 10}} 
+        style={{marginTop: 10}} 
         color={styleConfig.color.headerText.outstandingText[props.type]} 
         // component="h1"
         type="h1"

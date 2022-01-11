@@ -44,12 +44,19 @@
     "webpack-merge": "^5.3.0"
   },
   "dependencies": {
-    "@material-ui/icons": "^4.11.2",
-    "@material/button": "^8.0.0",
+    "@reduxjs/toolkit": "^1.6.1",
     "axios": "^0.21.4",
+    "formik": "^2.2.9",
+    "history": "4.10.1",
+    "lodash": "^4.17.21",
     "react": "^17.0.1",
+    "react-countdown": "^2.3.2",
     "react-dom": "^17.0.1",
-    "react-router-dom": "^5.2.0",
-    "styled-components": "^5.3.1"
+    "react-redux": "^7.2.5",
+    "react-router-dom": "^6.2.1",
+    "redux": "^4.1.1",
+    "serialize-error": "^8.1.0",
+    "styled-components": "^5.3.1",
+    "yup": "^0.32.9"
   }
 }
