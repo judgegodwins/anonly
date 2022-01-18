@@ -1,7 +1,9 @@
+import { styleConfig } from "config";
 import styled from "styled-components";
 
 interface SpinnerProps {
-  size?: string | number
+  size?: string | number;
+  spinnerColor?: "primary" | "secondary";
 }
 
 const getSize = ({ size }: SpinnerProps) => {
@@ -16,7 +18,7 @@ const Spinner = styled.div<SpinnerProps>`
   background: transparent;
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, .3);
-  border-top: 2px solid #fff;
+  border-top: 2px solid ${(props) => props.spinnerColor === 'primary' ? styleConfig.color.primary : '#fff'};
   animation: animate 1.5s infinite linear;
 
   @keyframes animate {

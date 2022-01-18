@@ -7,6 +7,7 @@ import MessagesListContainer from "components/HomeScreenComponents/MessagesListC
 import MessagesWrapper from "components/HomeScreenComponents/MessagesWrapper";
 import MobileHomeHeader from "components/HomeScreenComponents/MobileHomeHeader";
 import MessageService from "services/MessageService";
+import Spinner from "components/Spinner";
 
 const HomeWrapper = styled.div`
   position: relative;
@@ -29,11 +30,25 @@ const Home: FC<{}> = (props) => {
       <MobileHomeHeader username="judge" />
       <DesktopBar username="judge" />
       <MessagesWrapper>
-        <MessagesListContainer>
-          {messages.map((message) => (
-            <Message key={message._id} text={message.text} />
-          ))}
-        </MessagesListContainer>
+        {messages.length > 0 ? (
+          <MessagesListContainer>
+            {messages.map((message) => (
+              <Message key={message._id} text={message.text} />
+            ))}
+          </MessagesListContainer>
+        ) : (
+          <Spinner
+            spinnerColor="primary"
+            size={70}
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              marginTop: -35,
+              marginLeft: -35,
+            }}
+          />
+        )}
       </MessagesWrapper>
     </HomeWrapper>
   );
