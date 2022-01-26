@@ -7,8 +7,6 @@ import { useAppSelector } from "hooks/reduxHooks";
 import Typography from "components/Typography";
 import Button from "components/Button";
 
-interface MobileHeaderProps extends DetailProps {}
-
 const MobileHeaderWrapper = styled.div`
   position: fixed;
   z-index: 10;
@@ -81,7 +79,7 @@ const Indicator = () => (
   </IndicatorWrapper>
 );
 
-const MobileHomeHeader: FC<MobileHeaderProps> = (props) => {
+const MobileHomeHeader: FC<{}> = () => {
   const user = useAppSelector(({ auth }) => auth.user);
 
   return (

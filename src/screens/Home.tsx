@@ -27,8 +27,8 @@ const Home: FC<{}> = (props) => {
 
   return (
     <HomeWrapper>
-      <MobileHomeHeader username="judge" />
-      <DesktopBar username="judge" />
+      <MobileHomeHeader />
+      <DesktopBar />
       <MessagesWrapper>
         {messages.length > 0 ? (
           <MessagesListContainer>
