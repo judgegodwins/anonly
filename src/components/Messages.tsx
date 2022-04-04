@@ -25,18 +25,13 @@ const MessageList: FC<{}> = () => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          console.log("VISIBLE");
-          setPage((prev) => prev + 1);
-        }
+        if (entries[0].isIntersecting && hasMore) setPage((prev) => prev + 1);
       });
 
       if (node) observer.current.observe(node);
     },
     [loading, hasMore]
   );
-
-  console.log("HAS MORE: ", hasMore);
 
   return (
     <MessagesListContainer>
@@ -56,7 +51,9 @@ const MessageList: FC<{}> = () => {
       {loading && <InfiniteScrollSpinner />}
       {!hasMore && (
         <FlexCentered>
-          <Typography type="outstand-p" component="p">You've reached the end</Typography>
+          <Typography type="outstand-p" component="p">
+            You've reached the end
+          </Typography>
         </FlexCentered>
       )}
     </MessagesListContainer>

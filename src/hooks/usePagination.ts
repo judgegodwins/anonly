@@ -19,15 +19,13 @@ export default function <DataType>(
     setLoading(true);
     setError(false);
 
-    setTimeout(() => {
-      serviceAction(page, limit)
+    serviceAction(page, limit)
       .then(({ data: resData }) => {
         setData((prev) => [...new Set<DataType>([...prev, ...resData.data])]);
         setHasMore(Boolean(resData.next));
         setLoading(false);
       })
       .catch((e) => setError(true));
-    }, 5000);
   }, [page, limit]);
 
   return { loading, error, data, hasMore };
