@@ -1,12 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { Reducer, AnyAction } from 'redux';
 import authReducer from 'slices/auth';
 import errorReducer from 'slices/error';
+import notificationReducer from './slices/notification';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
-    errors: errorReducer
+    errors: errorReducer,
+    notifications: notificationReducer
   },
   devTools: true
 });

@@ -1,37 +1,38 @@
-import React, { Component, FC, useState } from 'react';
-import { Formik, FormikHelpers, FormikProps } from 'formik';
-import { serializeError } from 'serialize-error';
-import * as Yup from 'yup';
-import Padding from 'components/Padding';
-import TextField from 'components/TextField';
-import SlideInCard from 'components/SlideInCard';
-import FormActionButton from 'components/FormComponents/FormActionButton';
-import Typography from 'components/Typography';
-import FullscreenWrapper from 'components/FullscreenWrapper';
-import Header from 'components/Header';
-import BottomRedirect from 'components/FormComponents/BottomRedirect';
-import Spinner from 'components/Spinner';
-import Dialog from 'components/Dialog';
+import React, { Component, FC, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Formik, FormikHelpers, FormikProps } from "formik";
+import { serializeError } from "serialize-error";
+import * as Yup from "yup";
+import Countdown from "react-countdown";
 
+import Padding from "components/Padding";
+import TextField from "components/TextField";
+import SlideInCard from "components/SlideInCard";
+import FormActionButton from "components/FormComponents/FormActionButton";
+import Typography from "components/Typography";
+import FullscreenWrapper from "components/FullscreenWrapper";
+import Header from "components/Header";
+import BottomRedirect from "components/FormComponents/BottomRedirect";
+import Button from "components/Button";
+import Spinner from "components/Spinner";
+import Dialog from "components/Dialog";
+import CountdownButton from "components/CountdownButton";
+import DialogContent from "components/DialogContent";
+import { DialogActions } from "components/DialogActions";
 
-import { LoginValues, SetEmailValues } from 'types/auth';
-import { styleConfig } from 'config';
-import { useAppDispatch } from 'hooks/reduxHooks';
-import { login } from 'slices/auth/actions';
-import { Link, useNavigate } from 'react-router-dom';
-import Button from 'components/Button';
-import AuthService from 'services/AuthService';
-import { pushError } from 'slices/error';
-import { removeProposedEmail, setProposedEmail } from 'helpers/authHelpers';
-import CountdownButton from 'components/CountdownButton';
+import { LoginValues, SetEmailValues } from "types/auth";
+import { styleConfig } from "config";
+import { useAppDispatch } from "hooks/reduxHooks";
+import { login } from "slices/auth/actions";
+import AuthService from "services/AuthService";
+import { pushError } from "slices/error";
+import { removeProposedEmail, setProposedEmail } from "helpers/authHelpers";
 
 const Schema = Yup.object({
-  email: Yup.string().required('Email is required').email('Invalid format'),
-})
-
+  email: Yup.string().required("Email is required").email("Invalid format"),
+});
 
 const SetEmail: FC<{}> = (props) => {
-
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [emailSent, setEmailSent] = useState(false);
@@ -45,7 +46,7 @@ const SetEmail: FC<{}> = (props) => {
         height="25%"
         type="primary"
         firstText="One last thing"
-        outstandingText="Link your email"
+        outstandingText="Would you like to link your email?"
       />
       <SlideInCard height="75%">
         <Formik
@@ -54,7 +55,7 @@ const SetEmail: FC<{}> = (props) => {
           onSubmit={(values, actions) => {
             AuthService.setEmail(values)
               .then(() => {
-                actions.setSubmitting(false)
+                actions.setSubmitting(false);
 
                 setEmailSent(true);
                 setProposedEmail(values.email);
@@ -62,7 +63,7 @@ const SetEmail: FC<{}> = (props) => {
               .catch((e: Error) => {
                 dispatch(pushError(serializeError(e)));
                 actions.setSubmitting(false);
-              })
+              });
             // actions.setSubmitting(false);
           }}
         >
@@ -72,7 +73,7 @@ const SetEmail: FC<{}> = (props) => {
             touched,
             handleChange,
             handleSubmit,
-            isSubmitting
+            isSubmitting,
           }) => {
             return (
               <>
@@ -90,11 +91,13 @@ const SetEmail: FC<{}> = (props) => {
                   </Padding>
 
                   <FormActionButton type="submit" disabled={isSubmitting}>
-                    {
-                      !isSubmitting
-                        ? <Typography type="h5" color={styleConfig.color.white}>Link Email</Typography>
-                        : <Spinner size={20} />
-                    }
+                    {!isSubmitting ? (
+                      <Typography type="h5" color={styleConfig.color.white}>
+                        Link Email
+                      </Typography>
+                    ) : (
+                      <Spinner size={20} />
+                    )}
                   </FormActionButton>
 
                   <FormActionButton
@@ -105,36 +108,39 @@ const SetEmail: FC<{}> = (props) => {
                   >
                     I don't want to link my email
                   </FormActionButton>
-
                 </form>
-                {
-                  emailSent &&
-                  <Dialog
-                    primaryButtonText="OK"
-                    primaryClick={(e) => {
-                      navigate('/', {replace: true})
-                    }}
-                    secondaryButton={() => (
-                      <Button 
-                        as={CountdownButton}
-                        time={Date.now() + 60000}
+                <Dialog open={emailSent}>
+                  <DialogContent>
+                    <Typography component="p" type="h5">
+                      An email containing a verification link has been sent to
+                      your inbox.
+                    </Typography>
+                  </DialogContent>
+                  <DialogActions>
+                    <Countdown date={Date.now() + 10000}>
+                      <Button
                         variant="secondary"
-                      />
-                    )}
-                  // secondaryClick={(e) => {
-                  //   setEmailSent(false);
-                  //   removeProposedEmail();
-                  // }}
-                  />
-                }
+                        onClick={() => {
+                          AuthService.resendEmail().catch((e) => {
+                            dispatch(pushError(serializeError(e)));
+                          });
+                        }}
+                      >
+                        Resend
+                      </Button>
+                    </Countdown>
+                    <Button onClick={() => navigate("/", { replace: true })}>
+                      OK
+                    </Button>
+                  </DialogActions>
+                </Dialog>
               </>
-            )
+            );
           }}
         </Formik>
       </SlideInCard>
     </FullscreenWrapper>
-  )
-
-}
+  );
+};
 
 export default SetEmail;

@@ -17,6 +17,7 @@ type ElementTypes = 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5';
 interface BaseProps {
   color?: string;
   fontWeight?: number;
+  textAlign?: "center" | "right" | "left" | "justify";
   type: ElementTypes | 'outstand-p' | 'subtext';
 }
 
@@ -37,7 +38,7 @@ const selectStyle = (styles: Styles, defaultStyle: string | number) => {
   }
 }
 
-const TypographyBase = styled.span`
+const TypographyBase = styled.span<BaseProps>`
 
   font-size: ${selectStyle({ subtext: '12px', p: '14px', 'outstand-p': '15px', h1: '32px', h2: '24px', h4: '18px', h5: '16px' }, '14px')};
   font-weight: ${
@@ -45,6 +46,7 @@ const TypographyBase = styled.span`
       props.fontWeight ||
       selectStyle({ subtext: 400, p: 400, 'outstand-p': 500, h1: 700, h2: 600, h4: 500, h5: 700 }, 400)(props)
   };
+  text-align: ${(props) => props.textAlign || 'unset'};
   color: ${(props: BaseProps) => props.color || styleConfig.color.text};
   line-height: ${selectStyle({ subtext: 1.57, h1: '39px', h2: '29px' }, 'unset')};
   

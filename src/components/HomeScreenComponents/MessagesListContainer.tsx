@@ -7,6 +7,8 @@ const MessagesListContainer = styled.ul`
   list-style: none;
   margin-top: 156px;
   margin-bottom: 0;
+  width: 100%;
+  height: calc(100% - 156px);
   /* overflow: scroll; */
   padding: 20px ${styleConfig.screenPadding.mobile};
   background: ${styleConfig.color.secondary};
@@ -14,6 +16,8 @@ const MessagesListContainer = styled.ul`
 
   @media only screen and (min-width: 1366px) {
     margin-top: 0;
+    padding: 86px 167px;
+    height: 100%;
   }
 `
 export default MessagesListContainer;

@@ -22,7 +22,8 @@ module.exports = {
       slices: path.resolve(__dirname, 'src/slices'),
       services: path.resolve(__dirname, 'src/services'),
       hooks: path.resolve(__dirname, 'src/hooks'),
-      helpers: path.resolve(__dirname, 'src/helpers')
+      helpers: path.resolve(__dirname, 'src/helpers'),
+      contexts: path.resolve(__dirname, 'src/contexts')
     },
     extensions: [ '.tsx', '.ts', '.js', '.jsx', '.scss', '.css', '.jpg', '.png' ]
   },

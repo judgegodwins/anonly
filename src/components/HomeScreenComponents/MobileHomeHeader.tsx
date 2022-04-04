@@ -6,6 +6,7 @@ import { DetailProps } from "types/common";
 import { useAppSelector } from "hooks/reduxHooks";
 import Typography from "components/Typography";
 import Button from "components/Button";
+import { useShareDialog } from "contexts/shareContext";
 
 const MobileHeaderWrapper = styled.div`
   position: fixed;
@@ -47,26 +48,29 @@ const BlueIndicator = styled.div`
   width: 100%;
 `;
 
-const Top: FC<DetailProps> = (props) => (
-  <TopWrapper>
-    <Header
-      noSidePadding
-      type="secondary"
-      firstText="Welcome ✨"
-      outstandingText={props.username}
-    />
+const Top: FC<DetailProps> = (props) => {
+  const { openDialog } = useShareDialog();
+  return (
+    <TopWrapper>
+      <Header
+        noSidePadding
+        type="secondary"
+        firstText="Welcome ✨"
+        outstandingText={props.username}
+      />
 
-    <Button
-      as="a"
-      href={encodeURI(`https://api.whatsapp.com/send?text=Send me an anonymous message on Anonly Beta https://anonly.netlify.app/m/${props.username}`)}
-      variant="transparent"
-      style={{ padding: "10px 5px" }}
-      textColor={styleConfig.color.text}
-    >
-      Share link
-    </Button>
-  </TopWrapper>
-);
+      <Button
+        onClick={openDialog}
+        variant="transparent"
+        style={{ padding: "10px 5px" }}
+        textColor={styleConfig.color.text}
+        // href={encodeURI(`https://api.whatsapp.com/send?text=Send me an anonymous message on Anonly Beta https://anonly.netlify.app/m/${props.username}`)}
+      >
+        Share link
+      </Button>
+    </TopWrapper>
+  );
+};
 
 const Indicator = () => (
   <IndicatorWrapper>

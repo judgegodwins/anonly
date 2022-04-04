@@ -1,25 +1,22 @@
-import React, { Fragment } from 'react';
-import GlobalStyle from './GlobalStyle';
-import Router from './routes';
-import Signup from './screens/Signup';
-import Login from './screens/Login';
-import SendMessage from './screens/SendMessage';
-import Home from 'screens/Home';
-import Alert from 'components/Alert';
-import SetEmail from 'screens/SetEmail';
-import history from 'helpers/history';
+import GlobalStyle from "./GlobalStyle";
+import Router from "./routes";
+import Alert from "components/Alert";
+import { ShareDialog } from "components/ShareDialog";
+import ShareDialogProvider from "components/providers/ShareDialogProvider";
+import NotificationProvider from "components/providers/NotificationProvider";
 // import EmailVerificationRoute from 'components/customroutes/EmailVerificationRoute';
 
 export default function App() {
-
   return (
-    <Fragment>
-      <GlobalStyle />
-      <Alert />
+    <NotificationProvider>
+      <ShareDialogProvider>
+        <GlobalStyle />
+        <Alert />
+        <ShareDialog />
 
-      <Router />
+        <Router />
 
-      {/* <Router history={history}>
+        {/* <Router history={history}>
         <Switch>
           <Route path="/" component={Home} exact />
           <Route path="/login" component={Login} exact />
@@ -28,6 +25,7 @@ export default function App() {
           <Route path="/m/:username" component={SendMessage} exact/>
         </Switch>
       </Router> */}
-    </Fragment>
-  )
+      </ShareDialogProvider>
+    </NotificationProvider>
+  );
 }

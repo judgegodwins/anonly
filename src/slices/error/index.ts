@@ -1,4 +1,4 @@
-import { SerializedError, Action, PayloadAction, AnyAction, createSlice } from '@reduxjs/toolkit'
+import { SerializedError, isRejected, PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { serializeError } from 'serialize-error';
 
 
@@ -6,14 +6,6 @@ export type ErrorState = (SerializedError | Error)[];
 
 const initialState: ErrorState = [] as (SerializedError | Error)[]
 
-
-interface RejectedAction extends Action {
-  error: Error
-}
-
-function isRejectedAction(action: AnyAction): action is RejectedAction {
-  return action.type.endsWith('rejected')
-}
 
 const errorSlice = createSlice({
   name: 'errors',
@@ -32,7 +24,7 @@ const errorSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addMatcher(
-      isRejectedAction,
+      isRejected,
       (state, action) => {
         state.push(action.error);
       }

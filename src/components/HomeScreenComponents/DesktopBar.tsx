@@ -5,6 +5,7 @@ import { styleConfig } from "config";
 import Header from "components/Header";
 import Button from "components/Button";
 import DesktopTabs from "./DesktopTabs";
+import DesktopBarBottom from "./DesktopBarBottom";
 
 const DesktopBarBase = styled.div`
   display: none; // do not display for desktop
@@ -29,7 +30,7 @@ const DesktopBar: FC<{}> = () => {
           firstText="Welcome ✨"
           outstandingText={user.username}
         />
-        <Button
+        {/* <Button
           as="a"
           href={encodeURI(
             `https://api.whatsapp.com/send?text=Send me an anonymous message on Anonly Beta https://anonly.netlify.app/m/${user.username}`
@@ -39,8 +40,9 @@ const DesktopBar: FC<{}> = () => {
           textColor={styleConfig.color.text}
         >
           Share link
-        </Button>
+        </Button> */}
         <DesktopTabs />
+        <DesktopBarBottom />
       </DesktopBarBase>
     )
   );

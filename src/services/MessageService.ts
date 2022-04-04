@@ -1,18 +1,21 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { getAccessToken } from "helpers/authHelpers";
+import {
+  apiErrorParser,
+  commonSuccessRespFilter,
+} from "helpers/responseHelpers";
+import { Message } from "types/message";
+import { PaginatedResponse } from "types/responses";
 
 class MessageService {
-  public http: AxiosInstance;
+  public static http = axios.create({
+    baseURL: `${process.env.API_URL}/message`,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-  constructor() {
-    console.log('api url : ', process.env.API_URL);
-    this.http = axios.create({
-      baseURL: `${process.env.API_URL}/message`,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
+  static pluginInterceptor() {
     this.http.interceptors.request.use(function (config) {
       return {
         ...config,
@@ -24,19 +27,26 @@ class MessageService {
     });
   }
 
-  sendMessage(data: { text: string }, to: string) {
-    return this.http.post("/new", data, { params: { user: to } });
+  static sendMessage(data: { text: string }, to: string) {
+    return MessageService.http.post("/new", data, { params: { user: to } });
   }
 
-  checkUser(username: string) {
-    return this.http.get("/check-user", { params: { username } });
+  static checkUser(username: string) {
+    return MessageService.http.get("/check-user", { params: { username } });
   }
 
-  getMessages() {
-    return this.http.get("/view/user-messages", {
-      params: { page: 1, limit: 20 },
-    });
+  static getMessages(page: number, limit = 10) {
+    return MessageService.http
+      .get("/view/user-messages", {
+        params: { page, limit },
+      })
+      .then((response: AxiosResponse<PaginatedResponse<Message[]>>) =>
+        commonSuccessRespFilter(response)
+      )
+      .catch(apiErrorParser);
   }
 }
 
-export default new MessageService();
+MessageService.pluginInterceptor();
+
+export default MessageService;

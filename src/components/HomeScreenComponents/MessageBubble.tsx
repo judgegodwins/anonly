@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, forwardRef, Ref } from 'react';
 import styled from 'styled-components';
 import Typography from 'components/Typography';
 import { styleConfig } from 'config';
@@ -20,12 +20,12 @@ const MessageBase = styled.li`
   }
 `;
 
-const Message: FC<MessageProps> = (props) => (
-  <MessageBase>
+const MessageBubble = forwardRef<HTMLLIElement, MessageProps>((props, ref) => (
+  <MessageBase ref={ref}>
     <Typography type="p">
       {props.text}
     </Typography>
   </MessageBase>
-)
+));
 
-export default Message;
+export default MessageBubble;

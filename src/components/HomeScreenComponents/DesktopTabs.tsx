@@ -8,13 +8,13 @@ const TabList = styled.ul`
   margin: 0;
   padding: 0;
   width: 100%;
-`
+`;
 
 const TabListItemBase = styled.li`
   width: 100%;
   padding: ${styleConfig.screenPadding.mobile};
   position: relative;
-`
+`;
 const Marker = styled.div`
   position: absolute;
   top: 0;
@@ -23,14 +23,13 @@ const Marker = styled.div`
   height: 100%;
   background: #fff;
   border-radius: 10px 0px 0px 10px;
-`
+`;
 const TabListItem: FC = (props) => (
   <TabListItemBase>
     {props.children}
     <Marker />
   </TabListItemBase>
-)
-
+);
 
 const DesktopTabs = () => (
   <TabList>
@@ -40,6 +39,6 @@ const DesktopTabs = () => (
       </Typography>
     </TabListItem>
   </TabList>
-)
+);
 
 export default DesktopTabs;

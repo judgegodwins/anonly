@@ -6,6 +6,8 @@ import Home from "screens/Home";
 import Login from "screens/Login";
 import Signup from "screens/Signup";
 import SendMessage from "screens/SendMessage";
+import SetEmail from "screens/SetEmail";
+import VerifyEmail from "screens/VerifyEmail";
 
 export default function Router() {
   const loggedIn = useAppSelector(({ auth }) => auth.loggedIn);
@@ -21,7 +23,7 @@ export default function Router() {
         },
         {
           path: "signup",
-          element: !loggedIn ? <Signup /> : <Navigate to="/" replace />,
+          element: <Signup />,
         },
         {
           path: "messages",
@@ -31,6 +33,14 @@ export default function Router() {
           path: "m/:username",
           element: <SendMessage />
         },
+        {
+          path: "set-email",
+          element: <SetEmail />
+        },
+        {
+          path: "verify",
+          element: <VerifyEmail />
+        }
       ],
     },
   ]);

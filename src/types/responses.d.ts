@@ -5,6 +5,18 @@ export interface SuccessResponse {
   message: string;
 }
 
+export interface PaginatedResponse<Data> extends SuccessDataResponse<Data> {
+  count?: number;
+  next?: {
+    page: number;
+    limit: number;
+  }
+  prev?: {
+    page: number;
+    limit: number;
+  }
+}
+
 export interface SuccessDataResponse<Data> extends SuccessResponse {
   data: Data
 }

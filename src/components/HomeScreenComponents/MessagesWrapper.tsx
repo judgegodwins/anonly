@@ -13,8 +13,6 @@ const MessagesWrapper = styled.div`
 
   @media only screen and (min-width: 1366px) {
     width: 75%;
-    padding: 66px 142px;
   }
 `
-
 export default MessagesWrapper;
