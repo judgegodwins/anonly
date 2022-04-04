@@ -16,7 +16,7 @@ class MessageService {
   });
 
   static pluginInterceptor() {
-    this.http.interceptors.request.use(function (config) {
+    MessageService.http.interceptors.request.use(function (config) {
       return {
         ...config,
         headers: {

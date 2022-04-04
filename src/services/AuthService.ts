@@ -14,34 +14,33 @@ import {
 import { getAccessToken } from "helpers/authHelpers";
 
 class AuthService {
-  http: AxiosInstance;
+  public static http = axios.create({
+    baseURL: `${process.env.API_URL}/auth`,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-  constructor() {
-    this.http = axios.create({
-      baseURL:
-        process.env.NODE_ENV === 'production'
-          ? 'https://api.wesy.ch/routes'
-          : 'http://localhost:8080/auth', // temporary
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
-    // eslint-disable-next-line
-    this.http.interceptors.request.use(function (config) {
+  static pluginInterceptor() {
+    AuthService.http.interceptors.request.use(function (config) {
       return {
         ...config,
-        headers: { ...config.headers, Authorization: `Bearer ${getAccessToken()}` }
+        headers: {
+          ...config.headers,
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
       };
     });
   }
+
+  // eslint-disable-next-line
 
   // static responseHandler <Data>(response: AxiosResponse<SuccessResponse<Data>>) {
   //   return commonSuccessRespFilter<Data>(response);
   // }
 
-  login(loginDetails: LoginValues) {
-    return this.http
+  static login(loginDetails: LoginValues) {
+    return AuthService.http
       .post("/login", loginDetails)
       .then((response: AxiosResponse<SuccessDataResponse<AuthData>>) =>
         commonSuccessRespFilter(response)
@@ -49,8 +48,8 @@ class AuthService {
       .catch(apiErrorParser);
   }
 
-  signup(signupDetails: SignupValues) {
-    return this.http
+  static signup(signupDetails: SignupValues) {
+    return AuthService.http
       .post("/signup", _.pick(signupDetails, ["username", "password"]))
       .then((response: AxiosResponse<SuccessDataResponse<AuthData>>) =>
         commonSuccessRespFilter(response)
@@ -58,8 +57,8 @@ class AuthService {
       .catch(apiErrorParser);
   }
 
-  setEmail(emailDetails: SetEmailValues) {
-    return this.http
+  static setEmail(emailDetails: SetEmailValues) {
+    return AuthService.http
       .post("/verification/request", emailDetails)
       .then((response: AxiosResponse<SuccessResponse>) =>
         commonSuccessRespFilter(response)
@@ -67,8 +66,8 @@ class AuthService {
       .catch(apiErrorParser);
   }
 
-  resendEmail() {
-    return this.http
+  static resendEmail() {
+    return AuthService.http
       .get("/verification/resend")
       .then((response: AxiosResponse<SuccessResponse>) =>
         commonSuccessRespFilter(response)
@@ -76,8 +75,8 @@ class AuthService {
       .catch(apiErrorParser);
   }
 
-  verifyEmail(code: string) {
-    return this.http
+  static verifyEmail(code: string) {
+    return AuthService.http
       .put("/verification/verify", undefined, { params: { code } })
       .then((response: AxiosResponse<SuccessResponse>) =>
         commonSuccessRespFilter(response)
@@ -86,4 +85,6 @@ class AuthService {
   }
 }
 
-export default new AuthService();
+AuthService.pluginInterceptor();
+
+export default AuthService;
