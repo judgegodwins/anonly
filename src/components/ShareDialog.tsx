@@ -1,5 +1,6 @@
 import { styleConfig } from "config";
 import { useShareDialog } from "contexts/shareContext";
+import { useAppSelector } from "hooks/reduxHooks";
 import { FC } from "react";
 import styled from "styled-components";
 import Button from "./Button";
@@ -10,19 +11,30 @@ const MarginedButton = styled(Button)`
   &:not(:last-child) {
     margin-bottom: 10px;
   }
-`
+`;
 
 export const ShareDialog: FC<{}> = () => {
   const { open, closeDialog } = useShareDialog();
+  const user = useAppSelector(({ auth }) => auth.user);
   const padding = styleConfig.screenPadding.mobile;
 
   return (
-    <Dialog open={open} handleClose={closeDialog} title="Share Link">
-      <Padding padding={`${padding} 0 0 0`}>
-        <MarginedButton bg="#0f0">Share on WhatsApp</MarginedButton>
-        <MarginedButton bg="#7c79fc">Share on Facebook</MarginedButton>
-        <MarginedButton bg="#f5085b">Share on Instagram</MarginedButton>
-      </Padding>
-    </Dialog>
+    user && (
+      <Dialog open={open} handleClose={closeDialog} title="Share Link">
+        <Padding padding={`${padding} 0 0 0`}>
+          <MarginedButton bg="#0f0">Share on WhatsApp</MarginedButton>
+          <MarginedButton
+            bg="#7c79fc"
+            as="a"
+            href={`https://web.facebook.com/sharer/?u=https://anonly.netlify.app/m/${user.username}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Share on Facebook
+          </MarginedButton>
+          <MarginedButton bg="#f5085b">Share on Instagram</MarginedButton>
+        </Padding>
+      </Dialog>
+    )
   );
 };
