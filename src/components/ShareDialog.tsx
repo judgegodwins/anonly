@@ -22,17 +22,38 @@ export const ShareDialog: FC<{}> = () => {
     user && (
       <Dialog open={open} handleClose={closeDialog} title="Share Link">
         <Padding padding={`${padding} 0 0 0`}>
-          <MarginedButton bg="#0f0">Share on WhatsApp</MarginedButton>
+          <MarginedButton
+            bg="#0f0"
+            as="a"
+            href={encodeURI(
+              `https://api.whatsapp.com/send?text=Write an anonymous message to me. I won't know who wrote it ❤️ \n ${window.location.origin}/m/${user.username}`
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Share on WhatsApp
+          </MarginedButton>
           <MarginedButton
             bg="#7c79fc"
             as="a"
-            href={`https://web.facebook.com/sharer/?u=https://anonly.netlify.app/m/${user.username}`}
+            href={`https://web.facebook.com/sharer/?u=${window.location.origin}/m/${user.username}`}
             target="_blank"
             rel="noopener noreferrer"
           >
             Share on Facebook
           </MarginedButton>
-          <MarginedButton bg="#f5085b">Share on Instagram</MarginedButton>
+          <MarginedButton
+            as="a"
+            bg={styleConfig.color.primary}
+            onClick={() => {
+              if (navigator.clipboard)
+                navigator.clipboard.writeText(
+                  `${window.location.origin}/m/${user.username}`
+                );
+            }}
+          >
+            Copy link
+          </MarginedButton>
         </Padding>
       </Dialog>
     )
