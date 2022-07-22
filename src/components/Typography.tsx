@@ -21,7 +21,7 @@ interface BaseProps {
   type: ElementTypes | 'outstand-p' | 'subtext';
 }
 
-interface TypographyProps extends BaseProps {
+export interface TypographyProps extends BaseProps {
   component?: ElementTypes | 'span' | AnyStyledComponent;
   style?: React.CSSProperties;
   [prop: string]: any;
@@ -40,7 +40,7 @@ const selectStyle = (styles: Styles, defaultStyle: string | number) => {
 
 const TypographyBase = styled.span<BaseProps>`
 
-  font-size: ${selectStyle({ subtext: '12px', p: '14px', 'outstand-p': '15px', h1: '32px', h2: '24px', h4: '18px', h5: '16px' }, '14px')};
+  font-size: ${selectStyle({ subtext: '12px', p: '14px', 'outstand-p': '15px', h1: '32px', h2: '24px', h3: '20px', h4: '18px', h5: '16px' }, '14px')};
   font-weight: ${
     (props) => 
       props.fontWeight ||

@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import { styleConfig } from 'config';
-import Check from 'svg/Check.svg';
-import Padding from 'components/Padding';
-import Typography from 'components/Typography';
-import Button from 'components/Button';
-import { Link } from 'react-router-dom';
-import { Fragment } from 'react';
+import styled from "styled-components";
+import { styleConfig } from "config";
+import Check from "svg/Check.svg";
+import Padding from "components/Padding";
+import Typography from "components/Typography";
+import Button from "components/Button";
+import { Link } from "react-router-dom";
+import { Fragment } from "react";
 
 const Container = styled.div`
   width: 100%;
@@ -13,13 +13,13 @@ const Container = styled.div`
 `;
 
 const CompleteIndicatorCover = styled.div`
-  background: #F0F2F4;
+  background: #f0f2f4;
   border-radius: 10px;
   border: 2px solid ${styleConfig.color.adjustPrimary};
   display: flex;
   align-items: center;
   padding: 12px;
-`
+`;
 
 const TickBoxBase = styled.div`
   width: 40px;
@@ -45,8 +45,8 @@ const CompleteIndicator = () => {
         </Typography>
       </Padding>
     </CompleteIndicatorCover>
-  )
-}
+  );
+};
 
 const SuccessResponse = () => (
   <Container>
@@ -57,9 +57,11 @@ const SuccessResponse = () => (
     </Typography>
     {/* </Padding> */}
     <Padding padding={[20, 0, 20, 0]}>
-      <Button style={{ marginTop: 10 }} as={Link} to="/signup">Get your link</Button>
+      <Button style={{ marginTop: 10 }} as={Link} to="/signup">
+        Get your link
+      </Button>
     </Padding>
   </Container>
-)
+);
 
 export default SuccessResponse;

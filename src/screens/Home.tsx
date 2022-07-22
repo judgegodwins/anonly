@@ -1,4 +1,5 @@
 import React, { Component, FC, useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import InfiniteScroll from "react-infinite-scroller";
 import { Message } from "types/message";
@@ -6,6 +7,7 @@ import { styleConfig } from "config";
 import DesktopBar from "components/HomeScreenComponents/DesktopBar";
 import MobileHomeHeader from "components/HomeScreenComponents/MobileHomeHeader";
 import MessageList from "components/Messages";
+import OutletContainer from "components/OutletContainer";
 
 const HomeWrapper = styled.div`
   position: relative;
@@ -20,7 +22,9 @@ const Home: FC<{}> = () => {
     <HomeWrapper>
       <MobileHomeHeader />
       <DesktopBar />
-      <MessageList />
+      <OutletContainer>
+        <Outlet />
+      </OutletContainer>
     </HomeWrapper>
   );
 };

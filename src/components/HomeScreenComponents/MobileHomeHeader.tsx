@@ -7,6 +7,7 @@ import { useAppSelector } from "hooks/reduxHooks";
 import Typography from "components/Typography";
 import Button from "components/Button";
 import { useShareDialog } from "contexts/shareContext";
+import { Link } from "react-router-dom";
 
 const MobileHeaderWrapper = styled.div`
   position: fixed;
@@ -29,15 +30,24 @@ const TopWrapper = styled.div`
   padding: 40px 0 20px;
 `;
 
-const IndicatorWrapper = styled.div`
+const IndicatorsWrapper = styled.div`
   width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  /* align-items: center; */
 `;
+
 const IndicatorBase = styled.div`
   position: relative;
   width: fit-content;
   display: flex;
   flex-direction: column;
+
+  &:not(:first-child) {
+    margin-left: 20px;
+  }
 `;
+
 const BlueIndicator = styled.div`
   position: absolute;
   bottom: 0;
@@ -72,15 +82,13 @@ const Top: FC<DetailProps> = (props) => {
   );
 };
 
-const Indicator = () => (
-  <IndicatorWrapper>
-    <IndicatorBase>
-      <Typography type="p" fontWeight={500} style={{ marginBottom: 10 }}>
-        Messages
-      </Typography>
-      <BlueIndicator />
-    </IndicatorBase>
-  </IndicatorWrapper>
+const IndicatorItem: FC<{ text: string; to: string }> = ({ text, to }) => (
+  <IndicatorBase as={Link} to={to}>
+    <Typography type="p" style={{ marginBottom: 10 }}>
+      {text}
+    </Typography>
+    <BlueIndicator />
+  </IndicatorBase>
 );
 
 const MobileHomeHeader: FC<{}> = () => {
@@ -90,7 +98,10 @@ const MobileHomeHeader: FC<{}> = () => {
     user && (
       <MobileHeaderWrapper>
         <Top username={user.username} />
-        <Indicator />
+        <IndicatorsWrapper>
+          <IndicatorItem text="Messages" to="/home/messages" />
+          <IndicatorItem text="Settings" to="/home/settings" />
+        </IndicatorsWrapper>
       </MobileHeaderWrapper>
     )
   );

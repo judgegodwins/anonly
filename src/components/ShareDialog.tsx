@@ -44,7 +44,7 @@ export const ShareDialog: FC<{}> = () => {
           </MarginedButton>
           <MarginedButton
             as="a"
-            bg={styleConfig.color.primary}
+            bg={styleConfig.color.primary}  
             onClick={() => {
               if (navigator.clipboard)
                 navigator.clipboard.writeText(
