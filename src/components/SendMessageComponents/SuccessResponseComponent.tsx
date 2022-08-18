@@ -56,18 +56,16 @@ const SuccessResponse = () => {
   return (
     <Container>
       <CompleteIndicator themeConfig={theme}/>
-      {/* <Padding padding={[20, 0, 20, 0]}> */}
-      <Typography component="h2" type="h2">
+      {/* <Typography component="h2" type="h2">
         Start receiving anonymous messages from your friends.
       </Typography>
-      {/* </Padding> */}
       <Padding padding={[20, 0, 20, 0]}>
         <Link to="/signup">
           <FormActionButton style={{ marginTop: 10 }}>
             Get your link
           </FormActionButton>
         </Link>
-      </Padding>
+      </Padding> */}
     </Container>
   );
 };

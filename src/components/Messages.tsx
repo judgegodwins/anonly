@@ -50,10 +50,10 @@ const MessageList: FC<{}> = () => {
           </Typography>
         </FlexCentered>
       )}
-      {(!data || data.length < 0) && (
+      {(!data || data.length <= 0) && (
         <FlexCentered>
           <Typography type="outstand-p" component="p">
-            You don't have any message yet.
+            You have no messages yet.
           </Typography>
         </FlexCentered>
       )}
