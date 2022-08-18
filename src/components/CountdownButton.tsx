@@ -1,6 +1,6 @@
 import Button from "./Button";
 import Countdown from "react-countdown";
-import { useState, FC, MouseEventHandler } from "react";
+import { FC, MouseEventHandler } from "react";
 
 interface CountdownButtonProps {
   time: string | number | Date;

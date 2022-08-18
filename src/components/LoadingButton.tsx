@@ -9,7 +9,7 @@ import Spinner from "./Spinner";
 interface LoadingButtonProps extends ButtonProps {
   isLoading: boolean;
   type: "button" | "reset" | "submit";
-  style: CSSProperties
+  style?: CSSProperties
 }
 
 const LoadingButton: FC<LoadingButtonProps> = ({ isLoading, children, ...rest }) => (

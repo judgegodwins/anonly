@@ -12,8 +12,7 @@ import BottomRedirect from 'components/FormComponents/BottomRedirect';
 import Spinner from 'components/Spinner';
 
 import { LoginValues } from 'types/auth';
-import { styleConfig } from 'config';
-import { useAppDispatch } from 'hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
 import { login } from 'slices/auth/actions';
 
 const LoginSchema = Yup.object({
@@ -24,6 +23,7 @@ const LoginSchema = Yup.object({
 const Login: FC<{}> = (props) => {
 
   const dispatch = useAppDispatch();
+  const theme = useAppSelector(({ theme }) => theme);
 
   const initialValues: LoginValues = {
     username: "",
@@ -44,7 +44,6 @@ const Login: FC<{}> = (props) => {
           initialValues={initialValues}
           validationSchema={LoginSchema}
           onSubmit={(values, actions) => {
-            console.log(values);
             // actions.setSubmitting(false);
 
             dispatch(login(values))
@@ -90,7 +89,7 @@ const Login: FC<{}> = (props) => {
                 <FormActionButton type="submit" disabled={isSubmitting}>
                   {
                     !isSubmitting
-                      ? <Typography type="h5" color={styleConfig.color.white}>Log in</Typography>
+                      ? <Typography type="h5" color={theme.color.white}>Log in</Typography>
                       : <Spinner size={20} />
                   }
                 </FormActionButton>

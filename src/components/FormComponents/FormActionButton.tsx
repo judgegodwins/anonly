@@ -1,7 +1,7 @@
-import Button from "components/Button";
+import Button, { ButtonProps } from "components/Button";
 import styled from "styled-components";
 
-const FormActionButton = styled(Button)`
+const FormActionButton = styled(Button)<ButtonProps>`
   width: 100%;
 
   @media only screen and (min-width: 961px) {

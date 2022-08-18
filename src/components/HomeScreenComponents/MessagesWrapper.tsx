@@ -1,7 +1,10 @@
-import { styleConfig } from 'config';
+import { FC } from 'react';
 import styled from 'styled-components';
+import { styleConfig } from 'config';
+import { useAppSelector } from 'hooks/reduxHooks';
+import { ThemeProp } from 'types/common';
 
-const MessagesWrapper = styled.div`
+const MessagesWrapperBase = styled.div<ThemeProp>`
   position: relative;
   width: 100%;
   height: 100%;
@@ -15,4 +18,13 @@ const MessagesWrapper = styled.div`
     width: 75%;
   }
 `
+
+const MessagesWrapper: FC<{}> = (props) => {
+  const theme = useAppSelector(({ theme }) => theme);
+
+  return (
+    <MessagesWrapperBase {...props} themeConfig={theme} />
+  )
+}
+
 export default MessagesWrapper;

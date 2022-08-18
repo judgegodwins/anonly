@@ -4,8 +4,8 @@ export const styleConfig = {
     desktop: null,
   },
   color: {
-    primary: "#2186DE",
-    adjustPrimary: "#2185DC",
+    primary: "#5b1eeb",
+    adjustPrimary: "#5b1eeb",
     semiPrimary: "rgba(255, 255, 255, 0.25)",
     secondary: "#F0F2F4",
     white: "#FFF",

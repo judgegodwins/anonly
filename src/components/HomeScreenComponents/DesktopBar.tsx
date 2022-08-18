@@ -6,24 +6,26 @@ import Header from "components/Header";
 import Button from "components/Button";
 import DesktopTabs from "./DesktopTabs";
 import DesktopBarBottom from "./DesktopBarBottom";
+import { ThemeProp } from "types/common";
 
-const DesktopBarBase = styled.div`
+const DesktopBarBase = styled.div<ThemeProp>`
   display: none; // do not display for desktop
 
   @media only screen and (min-width: 1366px) {
     display: block;
     width: 25%;
-    background: ${styleConfig.color.primary};
+    background: ${(props) => props.themeConfig.color.primary};
     border-radius: 0px 30px 30px 0px;
   }
 `;
 
 const DesktopBar: FC<{}> = () => {
   const user = useAppSelector(({ auth }) => auth.user);
+  const theme = useAppSelector(({ theme }) => theme);
 
   return (
     user && (
-      <DesktopBarBase>
+      <DesktopBarBase themeConfig={theme}>
         <Header
           height="25%"
           type="primary"

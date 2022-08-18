@@ -6,20 +6,28 @@ import { Message } from "types/message";
 import { styleConfig } from "config";
 import DesktopBar from "components/HomeScreenComponents/DesktopBar";
 import MobileHomeHeader from "components/HomeScreenComponents/MobileHomeHeader";
-import MessageList from "components/Messages";
 import OutletContainer from "components/OutletContainer";
+import { useAppDispatch, useAppSelector } from "hooks/reduxHooks";
+import { getProfile } from "slices/auth/actions";
+import { ThemeProp } from "types/common";
 
-const HomeWrapper = styled.div`
+const HomeWrapper = styled.div<ThemeProp>`
   position: relative;
   width: 100%;
   height: 100%;
-  background: ${styleConfig.color.secondary};
+  background: ${(props) => props.themeConfig.color.secondary};
   display: flex;
 `;
 
 const Home: FC<{}> = () => {
+  const dispatch = useAppDispatch();
+  const theme = useAppSelector(({ theme }) => theme);
+
+  useEffect(() => {
+    dispatch(getProfile())
+  }, []);
   return (
-    <HomeWrapper>
+    <HomeWrapper themeConfig={theme}>
       <MobileHomeHeader />
       <DesktopBar />
       <OutletContainer>

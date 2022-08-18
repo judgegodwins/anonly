@@ -11,9 +11,8 @@ import FormWrapper from "components/FormComponents/FormCardWrapper";
 import Header from "components/Header";
 import BottomRedirect from "components/FormComponents/BottomRedirect";
 import Spinner from "components/Spinner";
-import { styleConfig } from "config";
 
-import { useAppDispatch } from "hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "hooks/reduxHooks";
 import { signup } from "slices/auth/actions";
 // import {  } from 'react-router-dom';
 import { SignupValues } from "types/auth";
@@ -40,6 +39,7 @@ const initialValues: SignupValues = {
 const Signup: FC<{}> = (props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const theme = useAppSelector(({ theme }) => theme);
 
   return (
     <FullscreenWrapper id="signup" color="primary">
@@ -121,7 +121,7 @@ const Signup: FC<{}> = (props) => {
 
                   <FormActionButton type="submit" disabled={isSubmitting}>
                     {!isSubmitting ? (
-                      <Typography type="h5" color={styleConfig.color.white}>
+                      <Typography type="h5" color={theme.color.white}>
                         Sign up
                       </Typography>
                     ) : (

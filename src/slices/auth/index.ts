@@ -3,6 +3,7 @@ import { createSlice, PayloadAction, AnyAction } from "@reduxjs/toolkit";
 import { User } from "types/auth";
 import { SuccessDataResponse } from "types/responses";
 import { AuthData } from "types/auth";
+import { getProfile } from "./actions";
 
 interface AuthState {
   user: User | null;
@@ -23,18 +24,29 @@ function isActionWithSuccessAuthDataPayload(
   );
 }
 
-const authData = localStorage.getItem("auth_data");
-const user: User | null = authData && JSON.parse(authData).user;
 
-const initialState: AuthState = user
-  ? { loggedIn: true, user, loggingIn: false }
-  : { loggedIn: false, user: null, loggingIn: false };
+const tokenExists = Boolean(localStorage.getItem("auth_data"));
+
+const initialState: AuthState = { loggedIn: tokenExists, user: null, loggingIn: true }
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    updateUsername: (state, action) => {
+      if (state.user) state.user.username = action.payload;
+    }
+  },
   extraReducers: (builder) => {
+    builder.addCase(getProfile.fulfilled, (state, action) => {
+      state.user = action.payload.data;
+    });
+
+    builder.addCase(getProfile.rejected, (state, action) => {
+      console.log('ACTION ERROR PAYLOAD: ', action.payload, action.error);
+      state.loggedIn = false;
+      state.loggingIn = false;
+    })
     // builder.addCase(login.pending, (state, action) => {
     //   state.loggingIn = true;
     // })
@@ -56,5 +68,6 @@ export const authSlice = createSlice({
     // })
   },
 });
+export const { updateUsername } = authSlice.actions
 
 export default authSlice.reducer;

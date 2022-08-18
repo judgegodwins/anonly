@@ -1,4 +1,4 @@
-import React, { Component, FC, useState } from "react";
+import { FC, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Formik, FormikHelpers, FormikProps } from "formik";
 import { serializeError } from "serialize-error";
@@ -12,21 +12,17 @@ import FormActionButton from "components/FormComponents/FormActionButton";
 import Typography from "components/Typography";
 import FullscreenWrapper from "components/FullscreenWrapper";
 import Header from "components/Header";
-import BottomRedirect from "components/FormComponents/BottomRedirect";
 import Button from "components/Button";
 import Spinner from "components/Spinner";
 import Dialog from "components/Dialog";
-import CountdownButton from "components/CountdownButton";
 import DialogContent from "components/DialogContent";
 import { DialogActions } from "components/DialogActions";
 
-import { LoginValues, SetEmailValues } from "types/auth";
-import { styleConfig } from "config";
-import { useAppDispatch } from "hooks/reduxHooks";
-import { login } from "slices/auth/actions";
+import { SetEmailValues } from "types/auth";
+import { useAppDispatch, useAppSelector } from "hooks/reduxHooks";
 import AuthService from "services/AuthService";
 import { pushError } from "slices/error";
-import { removeProposedEmail, setProposedEmail } from "helpers/authHelpers";
+import { setProposedEmail } from "helpers/authHelpers";
 
 const Schema = Yup.object({
   email: Yup.string().required("Email is required").email("Invalid format"),
@@ -36,6 +32,7 @@ const SetEmail: FC<{}> = (props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [emailSent, setEmailSent] = useState(false);
+  const theme = useAppSelector(({ theme }) => theme);
 
   const initialValues: SetEmailValues = { email: "" };
 
@@ -92,7 +89,7 @@ const SetEmail: FC<{}> = (props) => {
 
                   <FormActionButton type="submit" disabled={isSubmitting}>
                     {!isSubmitting ? (
-                      <Typography type="h5" color={styleConfig.color.white}>
+                      <Typography type="h5" color={theme.color.white}>
                         Link Email
                       </Typography>
                     ) : (
@@ -100,14 +97,14 @@ const SetEmail: FC<{}> = (props) => {
                     )}
                   </FormActionButton>
 
-                  <FormActionButton
-                    as={Link}
-                    to="/"
-                    variant="secondary"
-                    style={{ marginTop: 20 }}
-                  >
-                    I don't want to link my email
-                  </FormActionButton>
+                  <Link to="/">
+                    <FormActionButton
+                      variant="secondary"
+                      style={{ marginTop: 20 }}
+                    >
+                      I don't want to link my email
+                    </FormActionButton>
+                  </Link>
                 </form>
                 <Dialog open={emailSent}>
                   <DialogContent>

@@ -16,13 +16,13 @@ const MarginedButton = styled(Button)`
 export const ShareDialog: FC<{}> = () => {
   const { open, closeDialog } = useShareDialog();
   const user = useAppSelector(({ auth }) => auth.user);
-  const padding = styleConfig.screenPadding.mobile;
+  const theme = useAppSelector(({ theme }) => ({ color: theme.color, padding: theme.screenPadding.mobile }));
 
   return (
     user && (
       <Dialog open={open} handleClose={closeDialog} title="Share Link">
-        <Padding padding={`${padding} 0 0 0`}>
-          <MarginedButton
+        <Padding padding={`${theme.padding} 0 0 0`}>
+          <Button
             bg="#0f0"
             as="a"
             href={encodeURI(
@@ -32,8 +32,8 @@ export const ShareDialog: FC<{}> = () => {
             rel="noopener noreferrer"
           >
             Share on WhatsApp
-          </MarginedButton>
-          <MarginedButton
+          </Button>
+          <Button
             bg="#7c79fc"
             as="a"
             href={`https://web.facebook.com/sharer/?u=${window.location.origin}/m/${user.username}`}
@@ -41,10 +41,10 @@ export const ShareDialog: FC<{}> = () => {
             rel="noopener noreferrer"
           >
             Share on Facebook
-          </MarginedButton>
-          <MarginedButton
+          </Button>
+          <Button
             as="a"
-            bg={styleConfig.color.primary}  
+            bg={theme.color.primary}  
             onClick={() => {
               if (navigator.clipboard)
                 navigator.clipboard.writeText(
@@ -53,7 +53,7 @@ export const ShareDialog: FC<{}> = () => {
             }}
           >
             Copy link
-          </MarginedButton>
+          </Button>
         </Padding>
       </Dialog>
     )

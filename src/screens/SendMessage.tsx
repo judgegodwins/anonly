@@ -1,19 +1,19 @@
 import React, { Component, FC, useEffect, useState } from "react";
 import { useFormik, Form, FormikProvider } from "formik";
 import * as Yup from "yup";
-
 import FullscreenWrapper from "components/FullscreenWrapper";
 import Header from "components/Header";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import SlideInCard from "components/SlideInCard";
 import Typography from "components/Typography";
 import Padding from "components/Padding";
 import { styleConfig } from "config";
 import TextArea from "components/TextArea";
-import Button from "components/Button";
 import SuccessResponse from "components/SendMessageComponents/SuccessResponseComponent";
 import MessageService from "services/MessageService";
 import LoadingButton from "components/LoadingButton";
+import { useAppDispatch } from "hooks/reduxHooks";
+import { updateThemeColor } from "slices/theme";
 
 const Schema = Yup.object().shape({
   text: Yup.string().required("Text is required"),
@@ -23,14 +23,18 @@ const SendMessage: FC<{}> = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
-
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     MessageService.checkUser(params.username as string)
-      .catch(e => {
-        navigate('/login', { replace: true });
+      .then(({ data: resData }) => {
+        if (resData.data.clientTheme)
+          dispatch(updateThemeColor(resData.data.clientTheme));
       })
-  }, [params.username])
+      .catch((e) => {
+        navigate("/login", { replace: true });
+      });
+  }, [params.username]);
 
   const formik = useFormik({
     initialValues: {
@@ -38,11 +42,12 @@ const SendMessage: FC<{}> = () => {
     },
     validationSchema: Schema,
     onSubmit: (values, { setSubmitting, resetForm }) => {
-      MessageService.sendMessage(values, params.username as string)
-        .then(({ data: resData }) => {
+      MessageService.sendMessage(values, params.username as string).then(
+        ({ data: resData }) => {
           setIsSubmitted(true);
           resetForm();
-        })
+        }
+      );
     },
   });
 

@@ -1,26 +1,28 @@
+import { ButtonHTMLAttributes, FC } from 'react';
 import styled from "styled-components";
-import { styleConfig } from "config";
+import { ThemeProp } from 'types/common';
+import { useAppSelector } from 'hooks/reduxHooks';
 
-export interface ButtonProps {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: Boolean;
   variant?: "primary" | "secondary" | "transparent" | "danger" | "semi-primary";
   textColor?: string;
   bg?: string;
 }
 
-const Button = styled.button<ButtonProps>`
+const ButtonBase = styled.button<ButtonProps & ThemeProp>`
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: ${({ variant, bg }) => {
+  background: ${({ variant, bg, themeConfig }) => {
     const {
       adjustPrimary: primary,
       secondary,
       semiPrimary,
       error
-    } = styleConfig.color;
+    } = themeConfig.color;
     if (bg) return bg;
     if (!variant) return primary;
     if (variant === "primary") return primary;
@@ -33,13 +35,23 @@ const Button = styled.button<ButtonProps>`
   border-radius: 15px;
   outline: none;
   padding: 11px 40px;
-  color: ${({ variant, textColor }) =>
+  color: ${({ variant, textColor, themeConfig }) =>
     variant === "secondary" || variant === "transparent"
-      ? textColor || styleConfig.color.textSecondary
+      ? textColor || themeConfig.color.textSecondary
       : "#fff"};
   border: none;
   width: ${(props: ButtonProps) => (props.fullWidth ? "100%" : "unset")};
   font-weight: 500;
 `;
+
+const Button: FC<ReturnType<typeof ButtonBase>['props']> = ({ children, ...props }) => {
+  const theme = useAppSelector(({ theme }) => theme);
+
+  return (
+    <ButtonBase { ...props } themeConfig={theme}>
+      {children}
+    </ButtonBase>
+  )
+}
 
 export default Button;

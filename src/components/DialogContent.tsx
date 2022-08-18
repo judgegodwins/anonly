@@ -1,6 +1,4 @@
-import { styleConfig } from "config";
-import { FC } from "react";
-import styled, { AnyStyledComponent } from "styled-components";
+import styled from "styled-components";
 
 const DialogContent = styled.div`
   position: relative;

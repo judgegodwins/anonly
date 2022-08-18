@@ -1,11 +1,8 @@
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAppSelector } from "hooks/reduxHooks";
 import Typography from "components/Typography";
-import { SerializedError } from "@reduxjs/toolkit";
 import { useNotification } from "contexts/notificationContext";
-import notification from "slices/notification";
-import { styleConfig } from "config";
 
 interface WrapperProps {
   elOpacity: boolean;
@@ -55,6 +52,7 @@ const Alert: FC<{}> = () => {
   const [opacity, setOpacity] = useState<boolean>(false);
   const [display, setDisplay] = useState<boolean>(false);
   const { latestNotification } = useNotification();
+  const theme = useAppSelector(({ theme }) => theme);
 
   useEffect(() => {
     setDisplay(true);
@@ -65,7 +63,7 @@ const Alert: FC<{}> = () => {
 
   return latestNotification && display ? (
     <AlertWrapper elOpacity={opacity && Boolean(latestNotification)}>
-      <AlertBase color={latestNotification?.type === 'success' ? styleConfig.color.success : styleConfig.color.error}>
+      <AlertBase color={latestNotification?.type === 'success' ? theme.color.success : theme.color.error}>
         <Typography type="p" color="#fff" fontWeight={500}>
           {latestNotification && latestNotification.message}
         </Typography>

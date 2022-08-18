@@ -9,7 +9,10 @@ import SendMessage from "screens/SendMessage";
 import SetEmail from "screens/SetEmail";
 import VerifyEmail from "screens/VerifyEmail";
 import MessageList from "components/Messages";
-import Settings from "components/Settings";
+import Settings from "screens/Settings";
+import EditProfile from "components/EditProfile";
+import ChangePassword from "components/ChangePassword";
+import CustomizeTheme from "components/CustomizeTheme";
 
 export default function Router() {
   const loggedIn = useAppSelector(({ auth }) => auth.loggedIn);
@@ -21,8 +24,16 @@ export default function Router() {
       children: [
         { path: "", element: <Navigate to="/home/messages" replace /> },
         { path: "messages", element: <MessageList /> },
-        { path: "settings", element: <Settings /> }
-      ]
+        {
+          path: "settings",
+          element: <Settings />,
+          children: [
+            { path: "profile", element: <EditProfile /> },
+            { path: "auth", element: <ChangePassword /> },
+            { path: "theme", element: <CustomizeTheme /> },
+          ],
+        },
+      ],
     },
     {
       path: "/",
@@ -38,16 +49,16 @@ export default function Router() {
         },
         {
           path: "m/:username",
-          element: <SendMessage />
+          element: <SendMessage />,
         },
         {
           path: "set-email",
-          element: <SetEmail />
+          element: <SetEmail />,
         },
         {
           path: "verify",
-          element: <VerifyEmail />
-        }
+          element: <VerifyEmail />,
+        },
       ],
     },
   ]);

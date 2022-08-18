@@ -1,5 +1,7 @@
-import { styleConfig } from "config";
+import { useAppSelector } from "hooks/reduxHooks";
+import { FC } from "react";
 import styled from "styled-components";
+import { ThemeProp } from "types/common";
 
 interface SpinnerProps {
   size?: string | number;
@@ -12,13 +14,13 @@ const getSize = ({ size }: SpinnerProps) => {
   return size;
 }
 
-const Spinner = styled.div<SpinnerProps>`
+const SpinnerBase = styled.div<SpinnerProps & ThemeProp>`
   width: ${getSize};
   height: ${getSize};
   background: transparent;
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, .3);
-  border-top: 2px solid ${(props) => props.spinnerColor === 'primary' ? styleConfig.color.primary : '#fff'};
+  border-top: 2px solid ${(props) => props.spinnerColor === 'primary' ? props.themeConfig.color.primary : '#fff'};
   animation: animate 1.5s infinite linear;
 
   @keyframes animate {
@@ -26,5 +28,12 @@ const Spinner = styled.div<SpinnerProps>`
     100% { transform: rotate(360deg); }
   }
 `;
+
+const Spinner: FC<SpinnerProps> = (props) => {
+  const theme = useAppSelector(({ theme }) => theme);
+
+  return <SpinnerBase {...props} themeConfig={theme} />
+
+}
 
 export default Spinner;

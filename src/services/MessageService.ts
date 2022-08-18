@@ -4,8 +4,9 @@ import {
   apiErrorParser,
   commonSuccessRespFilter,
 } from "helpers/responseHelpers";
+import { User } from "types/auth";
 import { Message } from "types/message";
-import { PaginatedResponse } from "types/responses";
+import { PaginatedResponse, SuccessDataResponse } from "types/responses";
 
 class MessageService {
   public static http = axios.create({
@@ -32,7 +33,13 @@ class MessageService {
   }
 
   static checkUser(username: string) {
-    return MessageService.http.get("/check-user", { params: { username } });
+    return MessageService.http
+      .get<SuccessDataResponse<Pick<User, "username" | "clientTheme">>>(
+        "/check-user",
+        { params: { username } }
+      )
+      .then(commonSuccessRespFilter)
+      .catch(apiErrorParser);
   }
 
   static getMessages(page: number, limit = 10) {

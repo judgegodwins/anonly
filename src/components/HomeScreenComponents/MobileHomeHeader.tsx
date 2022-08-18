@@ -1,21 +1,22 @@
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 import Header from "components/Header";
 import styled from "styled-components";
-import { styleConfig } from "config";
-import { DetailProps } from "types/common";
+import { DetailProps, ThemeProp } from "types/common";
 import { useAppSelector } from "hooks/reduxHooks";
 import Typography from "components/Typography";
 import Button from "components/Button";
 import { useShareDialog } from "contexts/shareContext";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { barPaths, getPathComponent } from "helpers";
+import { sentenceCase } from "change-case";
 
-const MobileHeaderWrapper = styled.div`
+const MobileHeaderWrapper = styled.div<ThemeProp>`
   position: fixed;
   z-index: 10;
   top: 0;
   width: 100%;
   background: #fff;
-  padding: 0 ${styleConfig.screenPadding.mobile};
+  padding: 0 ${(props) => props.themeConfig.screenPadding.mobile};
 
   @media only screen and (min-width: 1366px) {
     display: none;
@@ -48,18 +49,19 @@ const IndicatorBase = styled.div`
   }
 `;
 
-const BlueIndicator = styled.div`
+const BlueIndicator = styled.div<ThemeProp>`
   position: absolute;
   bottom: 0;
   /* width: 100% */
-  background: ${styleConfig.color.primary};
+  background: ${(props) => props.themeConfig.color.primary};
   border-radius: 5px 5px 0px 0px;
   height: 5px;
   width: 100%;
 `;
 
-const Top: FC<DetailProps> = (props) => {
+const Top: FC<DetailProps & ThemeProp> = (props) => {
   const { openDialog } = useShareDialog();
+
   return (
     <TopWrapper>
       <Header
@@ -73,7 +75,7 @@ const Top: FC<DetailProps> = (props) => {
         onClick={openDialog}
         variant="transparent"
         style={{ padding: "10px 5px" }}
-        textColor={styleConfig.color.text}
+        textColor={props.themeConfig.color.text}
         // href={encodeURI(`https://api.whatsapp.com/send?text=Send me an anonymous message on Anonly Beta https://anonly.netlify.app/m/${props.username}`)}
       >
         Share link
@@ -82,25 +84,44 @@ const Top: FC<DetailProps> = (props) => {
   );
 };
 
-const IndicatorItem: FC<{ text: string; to: string }> = ({ text, to }) => (
+const IndicatorItem: FC<{ text: string; to: string; isActive: boolean } & ThemeProp> = ({
+  text,
+  to,
+  isActive,
+  themeConfig
+}) => (
   <IndicatorBase as={Link} to={to}>
     <Typography type="p" style={{ marginBottom: 10 }}>
       {text}
     </Typography>
-    <BlueIndicator />
+    {isActive && <BlueIndicator themeConfig={themeConfig}/>}
   </IndicatorBase>
 );
 
 const MobileHomeHeader: FC<{}> = () => {
   const user = useAppSelector(({ auth }) => auth.user);
+  const theme = useAppSelector(({ theme }) => theme);
+  const location = useLocation();
+
+  const secondPathComponent = useMemo(
+    () => getPathComponent(location.pathname, 1),
+    [location.pathname]
+  );
 
   return (
     user && (
-      <MobileHeaderWrapper>
-        <Top username={user.username} />
+      <MobileHeaderWrapper themeConfig={theme}>
+        <Top username={user.username} themeConfig={theme} />
         <IndicatorsWrapper>
-          <IndicatorItem text="Messages" to="/home/messages" />
-          <IndicatorItem text="Settings" to="/home/settings" />
+          {barPaths.map((path, index) => (
+            <IndicatorItem
+              themeConfig={theme}
+              key={`path-${index}`}
+              text={sentenceCase(path)}
+              to={`/home/${path}`}
+              isActive={secondPathComponent === path}
+            />
+          ))}
         </IndicatorsWrapper>
       </MobileHeaderWrapper>
     )

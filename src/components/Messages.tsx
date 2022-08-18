@@ -1,4 +1,4 @@
-import usePagination from "hooks/usePagination";
+import { usePagination } from "hooks/apiHooks";
 import { FC, useCallback, useRef, useState } from "react";
 import MessageService from "services/MessageService";
 import { Message } from "types/message";
@@ -21,7 +21,6 @@ const MessageList: FC<{}> = () => {
 
   const lastElementRef = useCallback(
     (node) => {
-      console.log("iN REF");
       if (loading) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
@@ -35,24 +34,26 @@ const MessageList: FC<{}> = () => {
 
   return (
     <MessagesListContainer>
-      {data.map((message, index) => {
-        if (index === data.length - 1) {
-          return (
-            <MessageBubble
-              ref={lastElementRef}
-              key={message._id}
-              text={message.text}
-            />
-          );
-        } else {
-          return <MessageBubble key={message._id} text={message.text} />;
-        }
-      })}
+      {data.map((message, index) => (
+        <MessageBubble
+          ref={index === data.length - 1 ? lastElementRef : undefined}
+          key={message._id}
+          text={message.text}
+          date={message.createdAt}
+        />
+      ))}
       {loading && <InfiniteScrollSpinner />}
-      {!hasMore && (
+      {!hasMore && data.length > 0 && (
         <FlexCentered>
           <Typography type="outstand-p" component="p">
             You've reached the end
+          </Typography>
+        </FlexCentered>
+      )}
+      {(!data || data.length < 0) && (
+        <FlexCentered>
+          <Typography type="outstand-p" component="p">
+            You don't have any message yet.
           </Typography>
         </FlexCentered>
       )}

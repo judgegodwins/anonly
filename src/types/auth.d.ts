@@ -4,6 +4,7 @@ export interface User {
   email?: string;
   roles: string[];
   verified: boolean;
+  clientTheme?: string;
 }
 
 export interface AuthData {

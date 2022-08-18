@@ -2,22 +2,21 @@ import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
 
-import { styleConfig } from "config";
-import FullscreenWrapper from "components/FullscreenWrapper";
-import Header from "components/Header";
-import Spinner from "components/Spinner";
-import { useQuery } from "hooks/routerHooks";
 import Typography from "components/Typography";
+import Spinner from "components/Spinner";
 
 import AuthService from "services/AuthService";
+import { ThemeProp } from "types/common";
+import { useAppSelector } from "hooks/reduxHooks";
+import { useQuery } from "hooks/routerHooks";
 
-const Base = styled.div`
+const Base = styled.div<ThemeProp>`
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${styleConfig.color.secondary};
+  background-color: ${(props) => props.themeConfig.color.secondary};
 `;
 
 const Wrapper = styled.div`
@@ -29,6 +28,7 @@ const VerifyEmail: FC<{}> = () => {
   const query = useQuery();
   const [verified, setVerified] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+  const theme = useAppSelector(({ theme }) => theme);
 
   useEffect(() => {
     const code = query.get("code");
@@ -43,18 +43,18 @@ const VerifyEmail: FC<{}> = () => {
   }, [query]);
 
   return (
-    <Base>
+    <Base themeConfig={theme}>
       {verified ? (
         <Wrapper>
           <Icon
             icon="bi:check-circle"
             fontSize="7rem"
-            color={styleConfig.color.success}
+            color={theme.color.success}
           />
           <Typography
             textAlign="center"
             type="p"
-            color={styleConfig.color.success}
+            color={theme.color.success}
           >
             Email verified
           </Typography>
@@ -66,12 +66,12 @@ const VerifyEmail: FC<{}> = () => {
               <Icon
                 icon="clarity:error-line"
                 fontSize="7rem"
-                color={styleConfig.color.error}
+                color={theme.color.error}
               />
               <Typography
                 textAlign="center"
                 type="p"
-                color={styleConfig.color.error}
+                color={theme.color.error}
               >
                 {error.message}
               </Typography>

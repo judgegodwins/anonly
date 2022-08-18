@@ -5,6 +5,7 @@ import {
   LoginValues,
   SetEmailValues,
   SignupValues,
+  User,
 } from "types/auth";
 import { SuccessDataResponse, SuccessResponse } from "types/responses";
 import {
@@ -57,6 +58,13 @@ class AuthService {
       .catch(apiErrorParser);
   }
 
+  static getProfile() {
+    return AuthService.http
+      .get<SuccessDataResponse<User>>("/profile")
+      .then(commonSuccessRespFilter)
+      .catch(apiErrorParser);
+  }
+
   static setEmail(emailDetails: SetEmailValues) {
     return AuthService.http
       .post("/verification/request", emailDetails)
@@ -81,6 +89,13 @@ class AuthService {
       .then((response: AxiosResponse<SuccessResponse>) =>
         commonSuccessRespFilter(response)
       )
+      .catch(apiErrorParser);
+  }
+
+  static updateTheme(theme: string) {
+    return AuthService.http
+      .patch<SuccessResponse>('/update/theme', { theme })
+      .then(commonSuccessRespFilter)
       .catch(apiErrorParser);
   }
 }

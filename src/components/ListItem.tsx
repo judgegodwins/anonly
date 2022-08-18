@@ -1,10 +1,10 @@
-import { styleConfig } from "config";
 import { FC, ReactElement } from "react";
 import styled from "styled-components";
 import Typography, { TypographyProps } from "./Typography";
 
 const ListItemBase = styled.li`
-  padding: 10px 0;
+  padding: 12px 0;
+  /* height: 24px; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -20,10 +20,11 @@ const ListText = styled(Typography)`
 const ListItem: FC<{
   text: string,
   textVariant?: TypographyProps['type'],
-  action?: ReactElement
-}> = ({ text, action, textVariant }) => (
-  <ListItemBase>
-    <Typography type={textVariant || 'outstand-p'}>
+  action?: ReactElement,
+  as?: ReturnType<typeof ListItemBase>['props']['as']
+}> = ({ text, action, textVariant, as }) => (
+  <ListItemBase as={as}>
+    <Typography type={textVariant || 'text-md'} fontWeight={500}>
       {text}
     </Typography>
     {action}

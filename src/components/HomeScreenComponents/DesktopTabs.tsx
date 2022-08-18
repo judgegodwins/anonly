@@ -1,8 +1,17 @@
-import Typography from "components/Typography";
-import { styleConfig } from "config";
-import { FC } from "react";
-import { Link } from "react-router-dom";
+import { FC, useMemo } from "react";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { sentenceCase } from "change-case";
+import { useAppSelector } from "hooks/reduxHooks";
+import Typography from "components/Typography";
+import { barPaths, getPathComponent } from "helpers";
+import { ThemeProp } from "types/common";
+
+interface TabListItemProps {
+  text: string;
+  to: string;
+  isActive: boolean;
+}
 
 const TabList = styled.ul`
   list-style: none;
@@ -11,17 +20,20 @@ const TabList = styled.ul`
   width: 100%;
 `;
 
-const TabListItem = styled.li`
+const TabListItemBase = styled.li<Pick<TabListItemProps, "isActive"> & ThemeProp>`
   width: 100%;
-  padding: ${styleConfig.screenPadding.mobile};
+  padding: ${(props) => props.themeConfig.screenPadding.mobile};
   position: relative;
   transition: 100ms ease-out;
+  background: ${(props) =>
+    props.isActive ? (props) => props.themeConfig.color.semiPrimary : "transparent"};
 
   &:hover {
-    background: ${styleConfig.color.semiPrimary};
+    background: ${(props) => props.themeConfig.color.semiPrimary};
   }
 
   &::after {
+    display: ${(props) => (props.isActive ? "block" : "none")};
     position: absolute;
     content: "";
     top: 0;
@@ -31,34 +43,46 @@ const TabListItem = styled.li`
     background: #fff;
     border-radius: 10px 0px 0px 10px;
   }
+  & > a {
+    width: 100%;
+    height: 100%;
+  }
 `;
-// const Marker = styled.div`
-//   position: absolute;
-//   top: 0;
-//   right: 0;
-//   width: 10px;
-//   height: 100%;
-//   background: #fff;
-//   border-radius: 10px 0px 0px 10px;
-// `;
 
-const DesktopTabs = () => (
-  <TabList>
-    <TabListItem>
-      <Link to="/home/messages">
+const TabListItem: FC<TabListItemProps> = ({ text, to, isActive }) => {
+  const theme = useAppSelector(({ theme }) => theme);
+
+  return (
+    <TabListItemBase isActive={isActive} themeConfig={theme}>
+      <Link to={to}>
         <Typography type="outstand-p" color="#fff">
-          Messages
+          {text}
         </Typography>
       </Link>
-    </TabListItem>
-    <TabListItem>
-      <Link to="/home/settings">
-        <Typography type="outstand-p" color="#fff">
-          Settings
-        </Typography>
-      </Link>
-    </TabListItem>
-  </TabList>
-);
+    </TabListItemBase>
+  );
+};
+
+const DesktopTabs = () => {
+  const location = useLocation();
+
+  const secondPathComponent = useMemo(
+    () => getPathComponent(location.pathname, 1),
+    [location.pathname]
+  );
+
+  return (
+    <TabList>
+      {barPaths.map((path, index) => (
+        <TabListItem
+          key={`path-${index}`}
+          text={sentenceCase(path)}
+          to={`/home/${path}`}
+          isActive={secondPathComponent === path}
+        />
+      ))}
+    </TabList>
+  );
+};
 
 export default DesktopTabs;
