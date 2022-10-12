@@ -39,14 +39,14 @@ export default function Router() {
       path: "/",
       children: [
         { path: "/", element: <Navigate to="/home" /> },
-        // {
-        //   path: "login",
-        //   element: !loggedIn ? <Login /> : <Navigate to="/" replace />,
-        // },
-        // {
-        //   path: "signup",
-        //   element: <Signup />,
-        // },
+        {
+          path: "login",
+          element: !loggedIn ? <Login /> : <Navigate to="/" replace />,
+        },
+        {
+          path: "signup",
+          element: <Signup />,
+        },
         {
           path: "m/:username",
           element: <SendMessage />,
